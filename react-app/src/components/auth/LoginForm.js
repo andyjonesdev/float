@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import ReactAudioPlayer from 'react-audio-player';
 import { Redirect } from 'react-router-dom';
 import { login } from '../../store/session';
 
@@ -31,34 +32,10 @@ const LoginForm = () => {
   }
 
   return (
-    <form onSubmit={onLogin}>
-      <div>
-        {errors.map((error, ind) => (
-          <div key={ind}>{error}</div>
-        ))}
-      </div>
-      <div>
-        <label htmlFor='email'>Email</label>
-        <input
-          name='email'
-          type='text'
-          placeholder='Email'
-          value={email}
-          onChange={updateEmail}
-        />
-      </div>
-      <div>
-        <label htmlFor='password'>Password</label>
-        <input
-          name='password'
-          type='password'
-          placeholder='Password'
-          value={password}
-          onChange={updatePassword}
-        />
-        <button type='submit'>Login</button>
-      </div>
-    </form>
+    <ReactAudioPlayer
+    src="https://cdn.discordapp.com/attachments/858135958729392152/933475310001856532/Jhene_Aiko_-_Sativa_ft._Swae_Lee_Official_Audio_1.mp3"
+    controls
+    />
   );
 };
 
