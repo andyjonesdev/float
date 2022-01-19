@@ -56,7 +56,7 @@ const GlobalStyle = createGlobalStyle`
 
     body {
         display: flex;
-        justify-content: center;
+        // justify-content: center;
         height: 100%;
         font-family: 'Overpass', sans-serif;
     }
