@@ -75,7 +75,7 @@ const SongCard = () => {
 
     return(
         <SongCardContainer>
-            <div id="image-and-play" onClick={player.show}>
+            <div id="image-and-play" onClick={() => player.playSong(player.song)}>
                 <img id="play" src="https://media.discordapp.net/attachments/858135958729392152/933519058383536178/play.png?width=510&height=510"></img>
                 <img src={testSong.image}></img>
             </div>

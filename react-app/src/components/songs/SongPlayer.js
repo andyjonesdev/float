@@ -17,9 +17,9 @@ const SongPlayerContainer = styled.div`
         background-color: rgb(104,75,181);
         * {
             color: white;
-            baakground-color: white;
         }
     }
+
 `
 
 const SongPlayer = ({ src }) => {
@@ -31,6 +31,7 @@ const SongPlayer = ({ src }) => {
     return(
     <SongPlayerContainer>
         <AudioPlayer
+        id="player"
         volume={0.1}
         layout={"horizontal-reverse"}
         showSkipControls={true}
