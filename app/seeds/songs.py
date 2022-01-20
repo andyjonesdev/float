@@ -1,16 +1,14 @@
 from app.models import db, Song
 
 def seed_songs():
-    # song_copy_pasta = Song(
+    # copy for new Songs
+    #  = Song(
     #     user_id= ,
     #     title= ,
     #     image= ,
     #     description= ,
     #     audio= ,
     # )
-
-    # created_at="Sat, 17 Jan 2022 12:24:00 GMT",
-    # updated_at="Sat, 17 Jan 2022 12:24:00 GMT",
 
     sativa = Song(
         user_id=4,
@@ -20,7 +18,7 @@ def seed_songs():
     )
 
     db.session.add(sativa)
-    
+
     db.session.commit()
 
 def undo_songs():

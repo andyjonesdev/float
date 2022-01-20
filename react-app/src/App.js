@@ -13,6 +13,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
 import User from './components/User';
 import { authenticate } from './store/session';
+import CreateSongForm from "./components/songs/CreateSongForm";
 
 const PageContent = styled.div`
   display: flex;
@@ -50,6 +51,12 @@ function App() {
             <ProtectedRoute path='/users' exact={true} >
               <UsersList/>
             </ProtectedRoute>
+            {/* either Protect the below Route later or make it a component without a separate Route
+                whose visibility is controlled by a context state variable
+            */}
+            <Route path='/upload' exact>
+              <CreateSongForm />
+            </Route>
             <ProtectedRoute path='/users/:userId' exact={true} >
               <User />
             </ProtectedRoute>
