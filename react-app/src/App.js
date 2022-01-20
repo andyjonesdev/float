@@ -13,6 +13,7 @@ import { authenticate } from './store/session';
 
 const PageContent = styled.div`
   display: flex;
+  flex: 1 0 auto;
   justify-content: center;
 `
 

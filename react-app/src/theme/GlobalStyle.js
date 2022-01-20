@@ -56,10 +56,30 @@ const GlobalStyle = createGlobalStyle`
 
     body {
         display: flex;
-        // justify-content: center;
+        background-color: rgb(206,162,215);
+        background-image: url("https://pbs.twimg.com/media/Dm1Zg7EWwAIT3ro.png");
         height: 100%;
         font-family: 'Overpass', sans-serif;
+        background-position-x: 0%;
+        animation-delay: 0s;
+        animation-duration: 30s;
+        animation-name: panoramic;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: both;
+        will-change: background-position-x;
     }
+    @keyframes panoramic {
+        0% {
+          background-position-x: 0%;
+        }
+        50% {
+          background-position-x: 100%;
+        }
+        100% {
+          background-position-x: 0%;
+        }
+      }
 
     a {
         text-decoration: none;
