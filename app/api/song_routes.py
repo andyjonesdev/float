@@ -23,7 +23,9 @@ def create_song():
         )
         db.session.add(song)
         db.session.commit()
-        return song.to_dict(), 201
+        songDict = song.to_dict()
+        songDict["artist"] = songDict["artist"]["username"]
+        return songDict, 201
     return {"errors": validation_errors_to_error_messages_dict(form.errors)}, 400
 
 

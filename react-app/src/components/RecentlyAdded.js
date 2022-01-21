@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import ReactAudioPlayer from "react-audio-player";
 import AudioPlayer from "react-h5-audio-player"
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
@@ -42,9 +41,17 @@ const renderNewSongCards = (songs) => {
     songs.forEach((song) => {
         console.log('PUSHING SONG', song)
         songCards.push(
-            <SongCard song={song} key={song.id}/>
+            <SongCard song={song} reactKey={song.id}/>
         )
     })
+
+    // fill any grid space with testSong
+    let cardCount = songCards.length
+    if (cardCount < 12) {
+        for (let i = cardCount; i < 12; i++) {
+            songCards.push(<SongCard song={testSong} key={`fillCard${i}`}></SongCard>)
+        }
+    }
 
     return songCards
 }
@@ -58,8 +65,6 @@ const RecentlyAdded = () => {
 
     let newSongs = useSelector(state => state.songs.entities.new)
 
-    console.log("NEWSONGSXXXXXXXXXXXXXX", newSongs)
-
     if (!newSongs) {
         return <></>
     }
@@ -69,15 +74,6 @@ const RecentlyAdded = () => {
             <h2>Check out these new vibes</h2>
             <div id="recent-grid">
                 {renderNewSongCards(newSongs)}
-                <SongCard song={testSong}/>
-                <SongCard song={testSong}/>
-                <SongCard song={testSong}/>
-                <SongCard song={testSong}/>
-                <SongCard song={testSong}/>
-                <SongCard song={testSong}/>
-                <SongCard song={testSong}/>
-                <SongCard song={testSong}/>
-                <SongCard song={testSong}/>
             </div>
         </RecentlyAddedContainer>
     )

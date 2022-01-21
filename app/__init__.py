@@ -16,6 +16,9 @@ from .config import Config
 
 app = Flask(__name__)
 
+# allow for no trailing slash on API routes
+app.url_map.strict_slashes = False
+
 # Setup login manager
 login = LoginManager(app)
 login.login_view = 'auth.unauthorized'

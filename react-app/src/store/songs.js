@@ -44,7 +44,8 @@ const songsSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(createSong.fulfilled, (state, action) => {
             state.entities.songs[action.payload.id] = action.payload;
-            // state.entities.recent[action.payload.id] = action.payload;
+            if (state.entities.new.length < 12)
+            state.entities.new.splice(state.entities.new.length - 1, 1, action.payload) // array
         });
         builder.addCase(getNewSongs.fulfilled, (state, action) => {
             state.entities.new = action.payload["new"]

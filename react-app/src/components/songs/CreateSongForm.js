@@ -7,6 +7,7 @@ import { useCreateSongContext } from "../../context/CreateSongProvider"
 const SongForm = styled.form`
     // position: relative;
     // top: 0;
+    transition: all 1s;
     padding: 10px 0;
     background-color: rgb(104,75,181);
     border: 1px solid lightgrey;
@@ -43,8 +44,9 @@ const SongForm = styled.form`
 
 
 const CreateSongForm = () => {
-    const createSong = useCreateSongContext()
+    const createSongForm = useCreateSongContext()
     const dispatch = useDispatch()
+
     const handleSubmit = (e) => {
         e.preventDefault();
         let title = document.querySelector("#new-title").value
@@ -59,7 +61,7 @@ const CreateSongForm = () => {
         }))
     }
 
-    if (!createSong.visible) return <></>
+    if (!createSongForm.visible) return <></>
 
     return(
         <SongForm
