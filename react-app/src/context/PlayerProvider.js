@@ -7,16 +7,14 @@ export const usePlayer = () => useContext(PlayerContext);
 
 const PlayerProvider = ({ children }) => {
     const [visible, setVisible] = useState(false);
-    const [song, setSong] = useState(null)
 
 
     const playSong = async(audioLink) => {
-        await setSong(audioLink);
-
         if (!visible) {
-            setVisible(true)
+           await setVisible(true)
         }
         const player = document.querySelector("audio");
+        player.src = audioLink
         player.play()
     }
 
@@ -24,7 +22,6 @@ const PlayerProvider = ({ children }) => {
         <PlayerContext.Provider
             value={{
                 visible,
-                song,
                 playSong,
                 show: () => setVisible(true),
                 hide: () => setVisible(false),
