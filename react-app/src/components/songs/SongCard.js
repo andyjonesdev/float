@@ -69,18 +69,18 @@ const SongCardContainer = styled.div`
     }
 `
 // one SongCard which will be displayed in Home
-const SongCard = () => {
+const SongCard = ({ song, key }) => {
     const player = usePlayer();
 
 
     return(
-        <SongCardContainer>
+        <SongCardContainer key={key}>
             <div id="image-and-play" onClick={() => player.playSong(player.song)}>
                 <img id="play" src="https://media.discordapp.net/attachments/858135958729392152/933519058383536178/play.png?width=510&height=510"></img>
-                <img src={testSong.image}></img>
+                <img src={song.image}></img>
             </div>
-            <span id="title">{testSong.title}</span>
-            <span id="artist">{testSong.artistName}</span>
+            <span id="title">{song.title}</span>
+            <span id="artist">{song.artist}</span>
         </SongCardContainer>
     )
 }

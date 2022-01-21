@@ -7,6 +7,11 @@ from wtforms.validators import DataRequired, InputRequired, ValidationError
 
 from app.models.song import Song
 
+# for testing
+# def cant_be_aaaaa(form, field):
+#     if field.data == "aaaaa":
+#         raise ValidationError("Value cannot be aaaaa")
+
 # basic validators for new Songs
 # TODO: implement more robust Song validation
 class CreateSongForm(FlaskForm):

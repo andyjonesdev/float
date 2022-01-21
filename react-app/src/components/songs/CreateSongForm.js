@@ -1,4 +1,6 @@
 import styled from "styled-components"
+import { useDispatch } from "react-redux"
+import { createSong } from "../../store/songs"
 
 const SongForm = styled.form`
     position: relative;
@@ -37,28 +39,40 @@ const SongForm = styled.form`
     }
 `
 
-const handleSubmit = (e) => {
-    e.preventDefault();
-}
 
 const CreateSongForm = () => {
+    const dispatch = useDispatch()
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        let title = document.querySelector("#new-title").value
+        let image = document.querySelector("#new-image").value
+        let description = document.querySelector("#new-description").value
+        let audio = document.querySelector("#new-audio").value
+        dispatch(createSong({
+            title,
+            description,
+            image,
+            audio,
+        }))
+    }
+
     return(
         <SongForm onSubmit={handleSubmit}>
             <div className="field">
                 <label for="title">Song Title</label>
-                <input type="text" name="title"></input>
+                <input id="new-title" type="text" name="title"></input>
             </div>
             <div className="field">
                 <label for="art">Song Art</label>
-                <input className="file-input" type="file" name="art"></input>
+                <input id="new-image" className="file-input" type="file" name="art"></input>
             </div>
             <div className="field">
-                <label for="title">Song Audio</label>
-                <input className="file-input" type="file" name="title"></input>
+                <label for="audio">Song Audio</label>
+                <input id="new-audio" className="file-input" type="file" name="audio"></input>
             </div>
             <div className="field">
                 <label for="description">Song Description (Optional)</label>
-                <textarea rows={5} name="description"></textarea>
+                <textarea id="new-description" rows={5} name="description"></textarea>
             </div>
             <div className="field">
                 <button type="submit">Upload song</button>

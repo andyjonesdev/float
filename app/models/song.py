@@ -21,7 +21,7 @@ class Song(db.Model):
     user = db.relationship(
        'User', back_populates='songs', cascade='all, delete')
 
-    def to_dict(self):
+    def to_dict(self, includeArtist=False):
         return {
             'id': self.id,
             'userId': self.user_id,
@@ -31,4 +31,5 @@ class Song(db.Model):
             'audio': self.audio,
             'createdAt': self.created_at,
             'updatedAt': self.updated_at,
+            'artist': self.user.to_dict(),
         }
