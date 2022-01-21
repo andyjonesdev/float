@@ -1,10 +1,12 @@
 import styled from "styled-components"
+import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { createSong } from "../../store/songs"
+import { useCreateSongContext } from "../../context/CreateSongProvider"
 
 const SongForm = styled.form`
-    position: relative;
-    top: 0;
+    // position: relative;
+    // top: 0;
     padding: 10px 0;
     background-color: rgb(104,75,181);
     border: 1px solid lightgrey;
@@ -41,6 +43,7 @@ const SongForm = styled.form`
 
 
 const CreateSongForm = () => {
+    const createSong = useCreateSongContext()
     const dispatch = useDispatch()
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -56,8 +59,11 @@ const CreateSongForm = () => {
         }))
     }
 
+    if (!createSong.visible) return <></>
+
     return(
-        <SongForm onSubmit={handleSubmit}>
+        <SongForm
+        onSubmit={handleSubmit}>
             <div className="field">
                 <label for="title">Song Title</label>
                 <input id="new-title" type="text" name="title"></input>

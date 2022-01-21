@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import SongPlayer from "./components/songs/SongPlayer"
+import CreateSongProvider from "./context/CreateSongProvider";
 import PlayerProvider from "./context/PlayerProvider"
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
@@ -39,32 +40,29 @@ function App() {
   return (
     <BrowserRouter>
       <PlayerProvider>
-        <NavBar />
-        <PageContent>
-          <Switch>
-            <Route path='/login' exact={true}>
-              <LoginForm />
-            </Route>
-            <Route path='/sign-up' exact={true}>
-              <SignUpForm />
-            </Route>
-            <ProtectedRoute path='/users' exact={true} >
-              <UsersList/>
-            </ProtectedRoute>
-            {/* either Protect the below Route later or make it a component without a separate Route
-                whose visibility is controlled by a context state variable
-            */}
-            <Route path='/upload' exact>
-              <CreateSongForm />
-            </Route>
-            <ProtectedRoute path='/users/:userId' exact={true} >
-              <User />
-            </ProtectedRoute>
-            <Route path='/' exact={true} >
-              <Home />
-            </Route>
-          </Switch>
-        </PageContent>
+        <CreateSongProvider>
+          <NavBar />
+          {/* <CreateSongForm /> */}
+          <PageContent>
+            <Switch>
+              <Route path='/login' exact={true}>
+                <LoginForm />
+              </Route>
+              <Route path='/sign-up' exact={true}>
+                <SignUpForm />
+              </Route>
+              <ProtectedRoute path='/users' exact={true} >
+                <UsersList/>
+              </ProtectedRoute>
+              <ProtectedRoute path='/users/:userId' exact={true} >
+                <User />
+              </ProtectedRoute>
+              <Route path='/' exact={true} >
+                <Home />
+              </Route>
+            </Switch>
+          </PageContent>
+        </CreateSongProvider>
         <SongPlayer src={"https://cdn.discordapp.com/attachments/858135958729392152/933475310001856532/Jhene_Aiko_-_Sativa_ft._Swae_Lee_Official_Audio_1.mp3"}/>
       </PlayerProvider>
     </BrowserRouter>
