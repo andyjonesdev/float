@@ -3,13 +3,6 @@ import { useEffect } from "react"
 
 import { usePlayer } from "../../context/PlayerProvider";
 
-const testSong = {
-    artistName: "Jhené Aiko",
-    title: "Sativa (feat. Rae Sremmurd)",
-    image: "https://media.discordapp.net/attachments/928062866412683274/933176102141173810/unknown.png",
-    audio: "https://cdn.discordapp.com/attachments/858135958729392152/933475310001856532/Jhene_Aiko_-_Sativa_ft._Swae_Lee_Official_Audio_1.mp3"
-}
-
 const SongCardContainer = styled.div`
     background-color: rgb(159,99,197);
     display: flex;

@@ -6,13 +6,12 @@ import { useEffect } from "react";
 import 'react-h5-audio-player/lib/styles.css';
 
 const SongPlayerContainerTheSequel = styled.div`
-
-
     .transition {
         bottom: 0;
         opacity: 1;
         visibility: visible;
     }
+
     margin-top: auto;
     flex-shrink: 0;
 `
@@ -22,7 +21,7 @@ const SongPlayerContainer = styled.div`
     opacity: 0;
     display: flex;
     flex-shrink: 0;
-    transition: all 1s;
+    transition: all 5s;
     justify-content: center;
     width: 100%;
     position: fixed;

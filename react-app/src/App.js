@@ -14,7 +14,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
 import User from './components/User';
 import { authenticate } from './store/session';
-import CreateSongForm from "./components/songs/CreateSongForm";
+import SongPage from "./components/songs/SongPage";
 
 const PageContent = styled.div`
   display: flex;
@@ -57,6 +57,9 @@ function App() {
               <ProtectedRoute path='/users/:userId' exact={true} >
                 <User />
               </ProtectedRoute>
+              <Route path='/songs/:songId' exact>
+                <SongPage />
+              </Route>
               <Route path='/' exact={true} >
                 <Home />
               </Route>
