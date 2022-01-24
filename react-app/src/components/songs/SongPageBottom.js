@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { useSelector } from "react-redux"
 
 import Comment from "../comments/Comment"
 
@@ -41,6 +42,10 @@ const SongPageBottomContainer = styled.div`
                 background: pink;
                 width: 70px;
                 height: 70px;
+
+                img {
+                    max-height: 100%;
+                }
             }
 
             #comment-form {
@@ -52,7 +57,7 @@ const SongPageBottomContainer = styled.div`
                 width: 100%;
 
                 #comment-input {
-                    border: none;
+                    border: 1px solid grey;
                     padding-left: 15px;
                     font-size: 1rem;
                     height: 70%;
@@ -81,13 +86,14 @@ const SongPageBottomContainer = styled.div`
                 flex-direction: column;
                 // background: green;
                 width: 15%;
+                min-height: 200px;
 
                 #artist-pfp {
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     // background: purple;
-                    height: 80%;
+                    height: 100%;
 
                     #artist-img {
                         // background: orange;
@@ -103,12 +109,14 @@ const SongPageBottomContainer = styled.div`
                     }
                 }
                 #artist-name {
+                    // background: grey;
                     height: 20%;
-                    font-size: 1.25rem;
+                    font-size: 1.20rem;
                     display: flex;
                     color: white;
+                    // padding-left: 20px;
                     justify-content: center;
-                    align-items: center;
+                    // align-items: center;
                 }
             }
 
@@ -131,6 +139,10 @@ const SongPageBottomContainer = styled.div`
                 #description {
                     margin-top: 2%;
                     margin-bottom: 1%;
+
+                    span:first-child {
+                        font-weight: bold;
+                    }
                 }
             }
         }
@@ -143,7 +155,6 @@ const SongPageBottomContainer = styled.div`
                 display: flex;
                 align-items: center;
                 border-bottom: 1px solid grey;
-                // margin-bottom: 2%;
 
                 #comments-icon {
                     height: 30px;
@@ -159,11 +170,18 @@ const SongPageBottomContainer = styled.div`
 `
 
 const SongPageBottom = () => {
+    const song = useSelector(state => state.songs.entities.song)
+    const user = useSelector(state => state.session.user)
+
+    if (!song) return <></>
+
     return(
         <SongPageBottomContainer>
             <div id="write-comment">
                 <div id="pfp-and-add-comment">
-                    <div id="comment-pfp"></div>
+                    <div id="comment-pfp">
+                        <img src={user ? user.image : "https://media.discordapp.net/attachments/858135958729392152/935040055888719892/user.png"}></img>
+                    </div>
                     <form id="comment-form">
                         <input
                         id="comment-input"
@@ -177,19 +195,22 @@ const SongPageBottom = () => {
                     <div id="artist-info">
                         <div id="artist-pfp">
                             <div id="artist-img">
-                                <img src={testSong.image}></img>
+                                <img src={song.artistImage ? song.artistImage : "https://media.discordapp.net/attachments/858135958729392152/935040055888719892/user.png"}></img>
                             </div>
                         </div>
                         <div id="artist-name">
-                            <span>{testSong.artist}</span>
+                            <span>{song.artist}</span>
                         </div>
                     </div>
                     <div id="description-and-release">
                         <div id="release">
                             <span>Released on float:</span>
-                            <span>26 January 2018</span>
+                            <span>{song.createdAt.split(" ").slice(1, 4).join(" ")}</span>
                         </div>
-                        <div id="description">{testSong.description}</div>
+                        <div id="description">
+                            {song.description && <span>About this song:</span>}
+                            {song.description}
+                        </div>
                     </div>
                 </div>
                 <div id="comments">

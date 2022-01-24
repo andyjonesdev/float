@@ -3,7 +3,7 @@ import styled from "styled-components"
 const testComment = {
     commenterPfp: "https://cdn.discordapp.com/attachments/858135958729392152/934938618592641115/Sakura_Espeon-0.png",
     commenterName: "Andy is vibing",
-    content: "This song makes me feel like I am in the atmosphere. This song makes me feel like I am in the atmosphere. This song makes me feel like I am in the atmosphere. This song makes me feel like I am in the atmosphere. This song makes me feel like I am in the atmosphere. This song makes me feel like I am in the atmosphere. This song makes me feel like I am in the atmosphere. ",
+    content: "This is a long comment. This is a long comment. This is a long comment. This is a long comment. This is a long comment. This is a long comment. This is a long comment. This is a long comment. This is a long comment. This is a long comment. This is a long comment. This is a long comment. This is a long comment. This is a long comment. ",
 }
 
 const CommentContainer = styled.div`

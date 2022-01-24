@@ -4,13 +4,26 @@ import { useDispatch } from "react-redux"
 import { createSong } from "../../store/songs"
 import { useCreateSongContext } from "../../context/CreateSongProvider"
 
-const SongForm = styled.form`
-    // position: relative;
-    // top: 0;
-    transition: all 1s;
+const SongFormContainer = styled.div`
+    .visible {
+        visibility: visible;
+        top: 5vh;
+        // height: fit-content;
+    }
+    `
+
+    const SongForm = styled.form`
+    transition: all 0.5s;
+    z-index: 5;
+    position: absolute;
+    top: -10vh;
+    right: 0;
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
     padding: 10px 0;
     background-color: rgb(104,75,181);
-    border: 1px solid lightgrey;
+    border: 1px solid grey;
     border-top: 0;
     border-radius: 0 0 10px 10px;
     color: white;
@@ -20,6 +33,10 @@ const SongForm = styled.form`
     align-items: center;
     justify-content: space-around;
     flex-direction: row;
+
+    .visible {
+        color: pink;
+    }
 
     textarea {
         display: flex;
@@ -61,31 +78,33 @@ const CreateSongForm = () => {
         }))
     }
 
-    if (!createSongForm.visible) return <></>
+    // if (!createSongForm.visible) return <></>
 
     return(
-        <SongForm
-        onSubmit={handleSubmit}>
-            <div className="field">
-                <label for="title">Song Title</label>
-                <input id="new-title" type="text" name="title"></input>
-            </div>
-            <div className="field">
-                <label for="art">Song Art</label>
-                <input id="new-image" className="file-input" type="file" name="art"></input>
-            </div>
-            <div className="field">
-                <label for="audio">Song Audio</label>
-                <input id="new-audio" className="file-input" type="file" name="audio"></input>
-            </div>
-            <div className="field">
-                <label for="description">Song Description (Optional)</label>
-                <textarea id="new-description" rows={5} name="description"></textarea>
-            </div>
-            <div className="field">
-                <button type="submit">Upload song</button>
-            </div>
-        </SongForm>
+        <SongFormContainer>
+            <SongForm className={createSongForm.visible ? "visible" : ""}
+            onSubmit={handleSubmit}>
+                <div className="field">
+                    <label for="title">Song Title</label>
+                    <input id="new-title" type="text" name="title"></input>
+                </div>
+                <div className="field">
+                    <label for="art">Link to song art</label>
+                    <input id="new-image" className="file-input" name="art"></input>
+                </div>
+                <div className="field">
+                    <label for="audio">Link to song audio</label>
+                    <input id="new-audio" className="file-input"name="audio"></input>
+                </div>
+                <div className="field">
+                    <label for="description">Song Description (Optional)</label>
+                    <textarea id="new-description" rows={5} name="description"></textarea>
+                </div>
+                <div className="field">
+                    <button type="submit">Upload song</button>
+                </div>
+            </SongForm>
+        </SongFormContainer>
     )
 }
 

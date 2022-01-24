@@ -11,6 +11,7 @@ const NavAndUploadContainer = styled.div`
 `
 
 const Nav = styled.nav`
+  z-index: 10;
   color: white;
   display: flex;
   justify-content: center;

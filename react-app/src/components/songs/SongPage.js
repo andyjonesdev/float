@@ -1,19 +1,26 @@
 import styled from "styled-components"
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
+import { useParams } from "react-router-dom"
 
 import SongPageTop from "./SongPageTop"
 import SongPageBottom from "./SongPageBottom"
+import { getASong } from "../../store/songs"
 
 
 const SongPageContainer = styled.div`
     width: 1180px;
     margin-top: 1vh;
-
-    // #song-page-top:hover {
-    //     transform: scale(1.05);
-    // }
 `
 
 const SongPage = () => {
+    const dispatch = useDispatch();
+    const { songId } = useParams();
+
+    useEffect(() => {
+        dispatch(getASong(songId))
+    }, [])
+
     return(
         <SongPageContainer>
             <SongPageTop />

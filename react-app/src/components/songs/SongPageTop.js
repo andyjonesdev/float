@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { useSelector } from "react-redux"
 
 const testSong = {
     artist: "Jhené Aiko",
@@ -107,14 +108,18 @@ const SongPageTopContainer = styled.div`
 `
 
 const SongPageTop = () => {
+    const song = useSelector(state => state.songs.entities.song)
+
+    if (!song) return <></>
+
     return(
         <SongPageTopContainer id="song-page-top">
             <div id="left">
                 <div id="left-top">
                     <img id="play-button" src="https://media.discordapp.net/attachments/858135958729392152/933519058383536178/play.png?width=510&height=510"></img>
                     <div id="title-artist">
-                        <div id="title">{testSong.title}</div>
-                        <div id="artist">{testSong.artist}</div>
+                        <div id="title">{song.title}</div>
+                        <div id="artist">{song.artist}</div>
                     </div>
                     <div id="date-info">
                         <div id="date">4 years ago</div>
@@ -126,7 +131,7 @@ const SongPageTop = () => {
             </div>
             <div id="right">
                 <div id="img-container">
-                    <img src={testSong.image}></img>
+                    <img src={song.image}></img>
                 </div>
             </div>
         </SongPageTopContainer>
