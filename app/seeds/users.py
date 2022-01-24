@@ -6,7 +6,9 @@ def seed_users():
     demo = User(
         username='Demo', email='demo@aa.io', password='password')
     jhene = User(
-        username="Jhené Aiko", email='jheneaiko@aa.io', password='password')
+        username="Jhené Aiko", email='jheneaiko@aa.io', password='password',
+        image="https://cdn.discordapp.com/attachments/858135958729392152/934970689419640882/unknown.png"
+        )
     sza = User(
         username="SZA", email='sza@aa.io', password='password')
 

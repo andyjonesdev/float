@@ -21,7 +21,7 @@ const SongPlayerContainer = styled.div`
     opacity: 0;
     display: flex;
     flex-shrink: 0;
-    transition: all 5s;
+    transition: all 1s;
     justify-content: center;
     width: 100%;
     position: fixed;

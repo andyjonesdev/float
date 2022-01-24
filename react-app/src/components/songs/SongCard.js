@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { useEffect } from "react"
+import { useHistory } from "react-router-dom"
 
 import { usePlayer } from "../../context/PlayerProvider";
 
@@ -54,17 +55,30 @@ const SongCardContainer = styled.div`
     }
 
     #title {
+        cursor: pointer;
         margin-top: 3%;
         margin-left: 2%;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
     }
+
+    #title:hover {
+        text-decoration: underline;
+    }
+
+    #artist {
+        cursor: pointer;
+    }
 `
 // one SongCard which will be displayed in Home
 const SongCard = ({ song, reactKey }) => {
     const player = usePlayer();
+    const history = useHistory();
 
+    const redirectToSongPage = () => {
+        history.push(`/songs/${song.id}`)
+    }
 
     return(
         <SongCardContainer className="song-card" key={reactKey}>
@@ -72,8 +86,8 @@ const SongCard = ({ song, reactKey }) => {
                 <img id="play" src="https://media.discordapp.net/attachments/858135958729392152/933519058383536178/play.png?width=510&height=510"></img>
                 <img src={song.image}></img>
             </div>
-            <span id="title">{song.title}</span>
-            <span id="artist">{song.artist}</span>
+            <span id="title" onClick={redirectToSongPage}>{song.title}</span>
+            <span id="artist" onClick={redirectToSongPage}>{song.artist}</span>
         </SongCardContainer>
     )
 }

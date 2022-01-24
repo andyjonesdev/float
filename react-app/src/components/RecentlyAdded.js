@@ -37,9 +37,7 @@ const testSong = {
 
 const renderNewSongCards = (songs) => {
     let songCards = [];
-    console.log('SONGS:',songs)
     songs.forEach((song) => {
-        console.log('PUSHING SONG', song)
         songCards.push(
             <SongCard song={song} reactKey={song.id}/>
         )
