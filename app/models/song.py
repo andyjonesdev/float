@@ -19,7 +19,7 @@ class Song(db.Model):
     # comments = db.relationship(
     #    'Comment', back_populates='song', cascade='all, delete')
     user = db.relationship(
-       'User', back_populates='songs', cascade='all, delete')
+       'User', back_populates='songs')
 
     def to_dict(self):
         return {

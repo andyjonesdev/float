@@ -68,13 +68,14 @@ def create_song():
 @login_required
 def delete_song(song_id):
     song = Song.query.get(song_id)
+    send_song_id = song_id
 
     if song.user_id != current_user.id:
         return abort(403, description="Unauthorized deletion")
 
     db.session.delete(song)
     db.session.commit()
-    return {"songId": song.id, "message": "Success"}
+    return {"songId": send_song_id, "message": "Success"}
 
 # GET /api/songs/new
 @song_routes.route("/new")
