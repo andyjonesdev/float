@@ -1,10 +1,14 @@
 import styled from "styled-components";
 import React from 'react';
+import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from 'react-router-dom';
+
 import CreateSongProvider, { useCreateSongContext } from "../context/CreateSongProvider";
 import CreateSongForm from "./songs/CreateSongForm";
 import EditSongForm from "./songs/EditSongForm";
 import EditSongProvider from "../context/EditSongProvider";
+import LoginFormModal from "./auth/LoginFormModal";
+import { logout } from "../store/session";
 
 const NavAndUploadContainer = styled.div`
   display: flex;
@@ -18,7 +22,7 @@ const Nav = styled.nav`
   display: flex;
   justify-content: center;
   width: 100vw;
-  height: 5vh;
+  height: 50px;
   border-bottom: 1px solid grey;
   background-color: rgb(104,75,181);
 
@@ -72,12 +76,60 @@ const Nav = styled.nav`
     #upload, #profile {
       width: 17.5%;
     }
+
+    #user-info{
+      cursor: pointer;
+      position: relative;
+      // background: lightgreen;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+      height: 100%;
+      width: 100%;
+
+      #chevron {
+        position: relative;
+        bottom: 2px;
+        color: white;
+        width: 20px;
+      }
+
+      #user-username {
+        margin-right: 2%;
+      }
+
+      #profile-options {
+        position: absolute;
+        width: 206px;
+        left: 0;
+        top: 50px;
+      }
+
+      #user-pfp-container {
+        // background: purple;
+        // height: 100%;
+        margin-right: 7%;
+        aspect-ratio: 1;
+        height: 60%;
+        border-radius: 50%;
+        overflow: hidden;
+
+        img {
+          border-radius: 50%;
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
   }
 `
 
 
 const NavBar = () => {
+  const dispatch = useDispatch()
   const createSong = useCreateSongContext()
+  const user = useSelector(state => state.session.user)
 
   return (
     <NavAndUploadContainer>
@@ -105,7 +157,20 @@ const NavBar = () => {
             Upload
           </li>
           <li id="profile">
-            Profile
+            {!user && <LoginFormModal />}
+            {user &&
+            <div id="user-info">
+              <div id="user-pfp-container">
+                <img src={user ? user.image : "https://media.discordapp.net/attachments/858135958729392152/935040055888719892/user.png"}></img>
+              </div>
+              <span id="user-username">{user.username}</span>
+              {/* <img id="chevron" src="https://cdn.discordapp.com/attachments/858135958729392152/936345963738591292/down-arrow.png"></img> */}
+              <i id="chevron" class="fas fa-chevron-circle-down"></i>
+              {false &&
+              <ul id="profile-options">
+                <li onClick={logout}>Logout</li>
+              </ul>}
+            </div>}
           </li>
         </ul>
       </Nav>

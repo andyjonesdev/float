@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { useState } from "react"
 import { useHistory } from "react-router-dom"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { createSong, editSong, deleteSong } from "../../store/songs"
 import { useEditSongContext } from "../../context/EditSongProvider"
 
@@ -73,10 +73,12 @@ const SongForm = styled.form`
 `
 
 
-const EditSongForm = ({ song }) => {
+const EditSongForm = () => {
     const editSongForm = useEditSongContext()
     const dispatch = useDispatch()
     const history = useHistory()
+    const song = useSelector(state => state.songs.entities.song)
+
 
     const handleEdit = (e) => {
         e.preventDefault();

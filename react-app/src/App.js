@@ -7,6 +7,7 @@ import SongPlayer from "./components/songs/SongPlayer"
 import CreateSongProvider from "./context/CreateSongProvider";
 import EditSongProvider from "./context/EditSongProvider";
 import PlayerProvider from "./context/PlayerProvider"
+import { ModalProvider } from "./context/Modal";
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
 import NavBar from './components/NavBar';
@@ -45,6 +46,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ModalProvider>
       <PlayerProvider>
         <CreateSongProvider>
           <EditSongProvider>
@@ -76,6 +78,7 @@ function App() {
         </CreateSongProvider>
         <SongPlayer src={"https://cdn.discordapp.com/attachments/858135958729392152/933475310001856532/Jhene_Aiko_-_Sativa_ft._Swae_Lee_Official_Audio_1.mp3"}/>
       </PlayerProvider>
+      </ModalProvider>
     </BrowserRouter>
   );
 }
