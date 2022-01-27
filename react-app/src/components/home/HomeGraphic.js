@@ -37,8 +37,8 @@ const HomeGraphic = () => {
 
     return(
         <HomeGraphicContainer>
-            <canvas width="500" height="500" id="canvas"></canvas>
-            <canvas width="500" height="500" id="canvas2"></canvas>
+            {/* <canvas width="500" height="500" id="canvas"></canvas>
+            <canvas width="500" height="500" id="canvas2"></canvas> */}
         </HomeGraphicContainer>
     )
 }

@@ -142,7 +142,7 @@ const SongPageTop = () => {
                     </div>
                     <div id="date-info">
                         <div id="date">4 years ago</div>
-                        {song.userId === user.id && <img onClick={() => editSong.show()} src="https://cdn.discordapp.com/attachments/858135958729392152/936043833567871006/settings.png"></img>}
+                        {song.userId === user?.id && <img onClick={() => editSong.show()} src="https://cdn.discordapp.com/attachments/858135958729392152/936043833567871006/settings.png"></img>}
                     </div>
                 </div>
                 <div id="left-bottom">

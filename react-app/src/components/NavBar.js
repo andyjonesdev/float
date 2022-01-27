@@ -22,6 +22,16 @@ const Nav = styled.nav`
   border-bottom: 1px solid grey;
   background-color: rgb(104,75,181);
 
+  #float {
+    transition: all 0.25s;
+    font-style: italic;
+  }
+  #float:hover {
+    padding: 2px;
+    // background: rgb(208,154,245);
+    transform: scale(1.05);
+  }
+
   ul {
     width: 1180px;
     height: 100%;
@@ -81,7 +91,7 @@ const NavBar = () => {
           </li>
           <li id="home">
             <NavLink to='/' exact={true} activeClassName='active'>
-              f l o a t .
+              <div id="float">f l o a t .</div>
             </NavLink>
           </li>
           <li id="search">

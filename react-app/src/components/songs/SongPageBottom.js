@@ -27,7 +27,8 @@ const SongPageBottomContainer = styled.div`
             width: 90%;
 
             #comment-pfp {
-                background: pink;
+                // background: pink;
+                border-right: 1px solid grey;
                 width: 70px;
                 height: 70px;
 
