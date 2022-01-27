@@ -1,15 +1,36 @@
 import styled from "styled-components";
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import CreateSongProvider, { useCreateSongContext } from "../context/CreateSongProvider";
+import CreateSongForm from "./songs/CreateSongForm";
+import EditSongForm from "./songs/EditSongForm";
+import EditSongProvider from "../context/EditSongProvider";
+
+const NavAndUploadContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
 
 const Nav = styled.nav`
+  z-index: 10;
   color: white;
   display: flex;
   justify-content: center;
   width: 100vw;
-  height: 5%;
+  height: 5vh;
   border-bottom: 1px solid grey;
   background-color: rgb(104,75,181);
+
+  #float {
+    transition: all 0.25s;
+    font-style: italic;
+  }
+  #float:hover {
+    padding: 2px;
+    // background: rgb(208,154,245);
+    transform: scale(1.05);
+  }
 
   ul {
     width: 1180px;
@@ -56,31 +77,40 @@ const Nav = styled.nav`
 
 
 const NavBar = () => {
+  const createSong = useCreateSongContext()
+
   return (
-    <Nav>
-      <ul>
-        <li id="logo">
-          <NavLink to='/' exact={true} activeClassName='active'>
-            Icon
-            {/* <img src="https://pbs.twimg.com/media/Dm1Zg7EWwAIT3ro.png"></img> */}
-          </NavLink>
-        </li>
-        <li id="home">
-          <NavLink to='/' exact={true} activeClassName='active'>
-            f l o a t .
-          </NavLink>
-        </li>
-        <li id="search">
-          Search
-        </li>
-        <li id="upload">
-          Upload
-        </li>
-        <li id="profile">
-          Profile
-        </li>
-      </ul>
-    </Nav>
+    <NavAndUploadContainer>
+      <Nav>
+        <ul>
+          <li id="logo">
+            <NavLink to='/' exact={true} activeClassName='active'>
+              Icon
+              {/* <img src="https://pbs.twimg.com/media/Dm1Zg7EWwAIT3ro.png"></img> */}
+            </NavLink>
+          </li>
+          <li id="home">
+            <NavLink to='/' exact={true} activeClassName='active'>
+              <div id="float">f l o a t .</div>
+            </NavLink>
+          </li>
+          <li id="search">
+            Search
+          </li>
+          <li
+          onClick={() => {
+            createSong.visible ? createSong.hide() : createSong.show();
+          }}
+          id="upload">
+            Upload
+          </li>
+          <li id="profile">
+            Profile
+          </li>
+        </ul>
+      </Nav>
+      <CreateSongForm />
+    </NavAndUploadContainer>
   );
 }
 

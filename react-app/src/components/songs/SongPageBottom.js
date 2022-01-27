@@ -1,0 +1,224 @@
+import styled from "styled-components"
+import { useSelector } from "react-redux"
+
+import Comment from "../comments/Comment"
+
+const SongPageBottomContainer = styled.div`
+    margin-top: 2%;
+    width: 100%;
+    height: 600px;
+    height: fit-content;
+    border-radius: 10px;
+    background: rgba(144,116,216, 0.7);
+
+    #write-comment {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 15%;
+        border-bottom: 1px solid grey;
+
+        #pfp-and-add-comment {
+            display: flex;
+            flex-direction: row;
+            background: rgb(196,160,212);
+            // height: fit-content;
+            margin: 10px 0;
+            width: 90%;
+
+            #comment-pfp {
+                // background: pink;
+                border-right: 1px solid grey;
+                width: 70px;
+                height: 70px;
+
+                img {
+                    max-height: 100%;
+                }
+            }
+
+            #comment-form {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                // background: lightblue;
+                height: 70px;
+                width: 100%;
+
+                #comment-input {
+                    border: 1px solid grey;
+                    padding-left: 15px;
+                    font-size: 1rem;
+                    height: 70%;
+                    width: 95%;
+                    // background: lightblue;
+                }
+            }
+        }
+    }
+
+    #artist-and-comments {
+        display: flex;
+        flex-direction: column;
+        height: 85%;
+        // background: pink;
+
+        #artist-and-description {
+            display: flex;
+            // background: cyan;
+            width: 100%;
+            height: 40%;
+            border-bottom: 1px solid grey;
+
+            #artist-info {
+                display: flex;
+                flex-direction: column;
+                // background: green;
+                width: 15%;
+                min-height: 200px;
+
+                #artist-pfp {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    // background: purple;
+                    height: 100%;
+
+                    #artist-img {
+                        // background: orange;
+                        height: 80%;
+                        width: auto;
+                        aspect-ratio: 1;
+                        border-radius: 50%;
+                        overflow: hidden;
+
+                        img {
+                            max-height: 100%;
+                        }
+                    }
+                }
+                #artist-name {
+                    // background: grey;
+                    height: 20%;
+                    font-size: 1.20rem;
+                    display: flex;
+                    color: white;
+                    // padding-left: 20px;
+                    justify-content: center;
+                    // align-items: center;
+                }
+            }
+
+            #description-and-release {
+                // background: red;
+                width: 82.5%;
+                padding-top: 2%;
+                padding-left: 2%;
+
+                #release {
+                    display: flex;
+                    flex-direction: column;
+
+                    span:first-child {
+                        font-weight: bold;
+                        margin-bottom: 0.25%;
+                    }
+                }
+
+                #description {
+                    margin-top: 2%;
+                    margin-bottom: 1%;
+
+                    span:first-child {
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+        #comments {
+            height: fit-content;
+            padding-top: 2%;
+            padding-left: 15%;
+
+            #comments-amount {
+                display: flex;
+                align-items: center;
+                border-bottom: 1px solid grey;
+
+                #comments-icon {
+                    height: 30px;
+                    margin-right: 1%;
+                }
+
+                span {
+                    font-size: 1.25rem;
+                }
+            }
+        }
+    }
+`
+
+const SongPageBottom = () => {
+    const song = useSelector(state => state.songs.entities.song)
+    const user = useSelector(state => state.session.user)
+
+    if (!song) return <></>
+
+    return(
+        <SongPageBottomContainer>
+            <div id="write-comment">
+                <div id="pfp-and-add-comment">
+                    <div id="comment-pfp">
+                        <img src={user ? user.image : "https://media.discordapp.net/attachments/858135958729392152/935040055888719892/user.png"}></img>
+                    </div>
+                    <form id="comment-form">
+                        <input
+                        id="comment-input"
+                        placeholder="How does this song make you feel?"
+                        ></input>
+                    </form>
+                </div>
+            </div>
+            <div id="artist-and-comments">
+                <div id="artist-and-description">
+                    <div id="artist-info">
+                        <div id="artist-pfp">
+                            <div id="artist-img">
+                                <img src={song.artistImage ? song.artistImage : "https://media.discordapp.net/attachments/858135958729392152/935040055888719892/user.png"}></img>
+                            </div>
+                        </div>
+                        <div id="artist-name">
+                            <span>{song.artist}</span>
+                        </div>
+                    </div>
+                    <div id="description-and-release">
+                        <div id="release">
+                            <span>Released on float:</span>
+                            <span>{song.createdAt.split(" ").slice(1, 4).join(" ")}</span>
+                        </div>
+                        <div id="description">
+                            {song.description && <span>About this song:</span>}
+                            {song.description}
+                        </div>
+                    </div>
+                </div>
+                <div id="comments">
+                    <div id="comments-amount">
+                        <img id="comments-icon" src="https://cdn.discordapp.com/attachments/858135958729392152/934933099018588180/message.png"></img>
+                        <span>1,841 comments</span>
+                    </div>
+                    <div>
+                        <Comment />
+                        <Comment />
+                        <Comment />
+                        <Comment />
+                        <Comment />
+                        <Comment />
+                    </div>
+                </div>
+            </div>
+        </SongPageBottomContainer>
+    )
+}
+
+export default SongPageBottom

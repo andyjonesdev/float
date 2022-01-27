@@ -55,7 +55,9 @@ const GlobalStyle = createGlobalStyle`
     }
 
     body {
+        overflow-x: hidden;
         display: flex;
+        flex-direction: column;
         background-color: rgb(206,162,215);
         background-image: url("https://pbs.twimg.com/media/Dm1Zg7EWwAIT3ro.png");
         height: 100%;
