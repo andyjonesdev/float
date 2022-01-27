@@ -3,18 +3,6 @@ import { useSelector } from "react-redux"
 
 import Comment from "../comments/Comment"
 
-const testSong = {
-    artist: "Jhené Aiko",
-    title: "Sativa (feat. Swae Lee)",
-    image: "https://media.discordapp.net/attachments/928062866412683274/933176102141173810/unknown.png",
-    audio: "https://cdn.discordapp.com/attachments/858135958729392152/933475310001856532/Jhene_Aiko_-_Sativa_ft._Swae_Lee_Official_Audio_1.mp3",
-    description: `
-    Nori grape silver beet broccoli kombu beet greens fava bean potato quandong celery.
-    Bunya nuts black-eyed pea prairie turnip leek lentil turnip greens parsnip.
-    Sea lettuce lettuce water chestnut eggplant winter purslane fennel azuki bean earthnut pea sierra leone bologi leek soko chicory celtuce parsley jícama salsify.
-    `
-}
-
 const SongPageBottomContainer = styled.div`
     margin-top: 2%;
     width: 100%;

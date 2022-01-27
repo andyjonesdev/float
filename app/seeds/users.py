@@ -1,4 +1,5 @@
 from app.models import db, User
+from PIL import Image
 
 
 # Adds a demo user, you can add other users here if you want
@@ -11,10 +12,15 @@ def seed_users():
         )
     sza = User(
         username="SZA", email='sza@aa.io', password='password')
+    fka = User(
+        username="FKA twigs", email='fkatwigs@aa.io', password='password',
+        image="https://cdn.discordapp.com/attachments/858135958729392152/935957779674460230/fkatwigs.PNG")
+
 
     db.session.add(demo)
     db.session.add(jhene)
     db.session.add(sza)
+    db.session.add(fka)
 
     db.session.commit()
 

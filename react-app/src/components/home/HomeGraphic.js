@@ -1,6 +1,9 @@
 import styled from "styled-components"
-import butterchurn from 'butterchurn'
-import butterchurnPresets from 'butterchurn-presets'
+import Wave from "@foobar404/wave"
+import { useState, useEffect } from "react"
+import { usePlayer } from "../../context/PlayerProvider"
+
+import ohMyLove from "../../audio/FKA twigs - oh my love (audio).mp3"
 
 const HomeGraphicContainer = styled.div`
     display: flex;
@@ -13,29 +16,29 @@ const HomeGraphicContainer = styled.div`
 `
 
 const HomeGraphic = () => {
-    // const canvas = document.querySelector("#canvas")
-    // const audioContext = new AudioContext();
+    const player = usePlayer()
+    // let [wave] = useState(new Wave());
 
-    // const sourceNode = audioContext.createBufferSource();
+    // useEffect(() => {
+    //     player.playSong(ohMyLove)
+    //     setTimeout(() => {
+    //         document.querySelector("audio").setAttribute("crossorigin", "anonymous")
+    //         wave.fromElement("audio", "canvas", {
+    //             type: "stitches",
+    //             colors: ["purple", "pink"]
+    //         });
+    //         wave.fromElement("audio", "canvas2", {
+    //             type: "flower blocks",
+    //             colors: ["purple", "lavender"]
+    //         });
+    //     }, 2000)
+    // }, [])
 
-    // const visualizer = butterchurn.createVisualizer(audioContext, canvas, {
-    //     width: 800,
-    //     height: 600
-    // });
-
-    // visualizer.connectAudio(sourceNode);
-
-    // const presets = butterchurnPresets.getPresets();
-    // const preset = presets['Flexi, martin + geiss - dedicated to the sherwin maxawow'];
-
-    // visualizer.loadPreset(preset, 0.0);
-
-    // visualizer.setRendererSize(1600, 1200);
 
     return(
         <HomeGraphicContainer>
-            {/* <div id="canvas">{visualizer.render()}</div> */}
-            {/* <img src="https://cdn.discordapp.com/attachments/858135958729392152/933960845942222868/KdV41W.jpg"></img> */}
+            <canvas width="500" height="500" id="canvas"></canvas>
+            <canvas width="500" height="500" id="canvas2"></canvas>
         </HomeGraphicContainer>
     )
 }

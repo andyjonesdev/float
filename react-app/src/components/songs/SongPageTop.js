@@ -1,5 +1,7 @@
 import styled from "styled-components"
 import { useSelector } from "react-redux"
+import { useEditSongContext } from "../../context/EditSongProvider"
+import { usePlayer } from "../../context/PlayerProvider"
 
 const testSong = {
     artist: "Jhené Aiko",
@@ -63,9 +65,23 @@ const SongPageTopContainer = styled.div`
                 }
             }
             #date-info {
+                // background: lightgreen;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
                 font-size: 1.1rem;
                 padding-top: 10px;
                 color: white;
+
+                img {
+                    cursor: pointer;
+                    margin-top: 5px;
+                    width: 35px;
+                    transition: all 0.5s;
+                }
+                img:hover {
+                    transform: rotate(45deg);
+                }
             }
         }
 
@@ -108,6 +124,9 @@ const SongPageTopContainer = styled.div`
 `
 
 const SongPageTop = () => {
+    const editSong = useEditSongContext();
+    const player = usePlayer();
+    const user = useSelector(state => state.session.user)
     const song = useSelector(state => state.songs.entities.song)
 
     if (!song) return <></>
@@ -116,13 +135,14 @@ const SongPageTop = () => {
         <SongPageTopContainer id="song-page-top">
             <div id="left">
                 <div id="left-top">
-                    <img id="play-button" src="https://media.discordapp.net/attachments/858135958729392152/933519058383536178/play.png?width=510&height=510"></img>
+                    <img id="play-button" onClick={() => player.playSong(song.audio)} src="https://media.discordapp.net/attachments/858135958729392152/933519058383536178/play.png?width=510&height=510"></img>
                     <div id="title-artist">
                         <div id="title">{song.title}</div>
                         <div id="artist">{song.artist}</div>
                     </div>
                     <div id="date-info">
                         <div id="date">4 years ago</div>
+                        {song.userId === user.id && <img onClick={() => editSong.show()} src="https://cdn.discordapp.com/attachments/858135958729392152/936043833567871006/settings.png"></img>}
                     </div>
                 </div>
                 <div id="left-bottom">

@@ -3,6 +3,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import CreateSongProvider, { useCreateSongContext } from "../context/CreateSongProvider";
 import CreateSongForm from "./songs/CreateSongForm";
+import EditSongForm from "./songs/EditSongForm";
+import EditSongProvider from "../context/EditSongProvider";
 
 const NavAndUploadContainer = styled.div`
   display: flex;

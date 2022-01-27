@@ -33,6 +33,14 @@ def seed_songs():
         audio="https://cdn.discordapp.com/attachments/858135958729392152/933909876181200977/Jhene_Aiko_-_While_Were_Young_Prod._by_Fisticuffs.mp3",
     )
 
+    # oh_my_love = Song(
+    #     user_id=,
+    #     title="",
+    #     image="",
+    #     audio="",
+    #     description="",
+    # )
+
     db.session.add(sativa)
     db.session.add(good_days)
     db.session.add(while_were_young)

@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom"
 
 import SongPageTop from "./SongPageTop"
 import SongPageBottom from "./SongPageBottom"
+import EditSongForm from "./EditSongForm"
 import { getASong } from "../../store/songs"
 
 
@@ -21,8 +22,13 @@ const SongPage = () => {
         dispatch(getASong(songId))
     }, [])
 
+    let song = useSelector(state => state.songs.entities.song)
+
+    if (!song) return <></>
+
     return(
         <SongPageContainer>
+            <EditSongForm song={song}/>
             <SongPageTop />
             <SongPageBottom />
         </SongPageContainer>

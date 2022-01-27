@@ -17,6 +17,7 @@ const SongPlayerContainerTheSequel = styled.div`
 `
 
 const SongPlayerContainer = styled.div`
+    z-index: 100;
     visibility: hidden;
     opacity: 0;
     display: flex;
@@ -41,6 +42,12 @@ const SongPlayerContainer = styled.div`
 
 const SongPlayer = ({ src }) => {
     const player = usePlayer()
+
+    const audio = document.querySelector("audio")
+
+    if (audio) {
+        audio.id = "audio"
+    }
 
     return(
     <SongPlayerContainerTheSequel>
