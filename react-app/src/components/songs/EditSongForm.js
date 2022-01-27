@@ -1,7 +1,8 @@
 import styled from "styled-components"
 import { useState } from "react"
+import { useHistory } from "react-router-dom"
 import { useDispatch } from "react-redux"
-import { createSong, editSong } from "../../store/songs"
+import { createSong, editSong, deleteSong } from "../../store/songs"
 import { useEditSongContext } from "../../context/EditSongProvider"
 
 const SongFormContainer = styled.div`
@@ -75,6 +76,7 @@ const SongForm = styled.form`
 const EditSongForm = ({ song }) => {
     const editSongForm = useEditSongContext()
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const handleEdit = (e) => {
         e.preventDefault();
@@ -93,7 +95,13 @@ const EditSongForm = ({ song }) => {
         }))
     }
 
-    // if (!createSongForm.visible) return <></>
+    const handleDelete = (e) => {
+        e.preventDefault();
+        if (window.confirm("Are you sure you want to delete this song?")) {
+            dispatch(deleteSong(song.id))
+            history.push("/")
+        }
+    }
 
     return(
         <SongFormContainer>
@@ -117,7 +125,7 @@ const EditSongForm = ({ song }) => {
                 </div>
                 <div className="field" id="x-and-buttons">
                     <button onClick={handleEdit}>Save changes</button>
-                    <button>Delete song</button>
+                    <button onClick={handleDelete}>Delete song</button>
                 </div>
                 <img id="close" onClick={() => editSongForm.hide()} src="https://cdn.discordapp.com/attachments/858135958729392152/936053312095154226/cancel.png"></img>
             </SongForm>

@@ -63,6 +63,19 @@ def create_song():
         return songDict, 201
     return {"errors": validation_errors_to_error_messages_dict(form.errors)}, 400
 
+# DELETE /api/songs/:songId
+@song_routes.route("/<int:song_id>", methods=["DELETE"])
+@login_required
+def delete_song(song_id):
+    song = Song.query.get(song_id)
+
+    if song.user_id != current_user.id:
+        return abort(403, description="Unauthorized deletion")
+
+    db.session.delete(song)
+    db.session.commit()
+    return {"songId": song.id, "message": "Success"}
+
 # GET /api/songs/new
 @song_routes.route("/new")
 def new_songs():

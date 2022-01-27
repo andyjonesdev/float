@@ -72,10 +72,28 @@ export const createSong = createAsyncThunk(
     }
 );
 
+export const deleteSong = createAsyncThunk(
+    "songs/deleteSong",
+    async (songId, thunkAPI) => {
+        const response = await fetch(`/api/songs/${songId}`, {
+            method: "DELETE"
+        });
+        const data = await response.json();
+        if (response.ok && !data.errors) {
+            return data;
+        } else if (response.status < 500) {
+            throw thunkAPI.rejectWithValue(data.errors);
+        } else {
+            throw thunkAPI.rejectWithValue(["An error occurred. Please try again."]);
+        }
+    }
+
+)
+
 const initialState = { entities: { songs: {}, song: null, new: null } }
 
 const songsSlice = createSlice({
-    name: "items",
+    name: "songs",
     initialState,
     extraReducers: (builder) => {
         builder.addCase(createSong.fulfilled, (state, action) => {
@@ -87,6 +105,9 @@ const songsSlice = createSlice({
         });
         builder.addCase(editSong.fulfilled, (state, action) => {
             state.entities.song = action.payload
+        })
+        builder.addCase(deleteSong.fulfilled, (state, action) => {
+            delete state.entities.songs[action.payload.songId]
         })
         builder.addCase(getNewSongs.fulfilled, (state, action) => {
             state.entities.new = action.payload["new"]
