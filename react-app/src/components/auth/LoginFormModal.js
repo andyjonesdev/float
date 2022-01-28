@@ -1,20 +1,31 @@
+import styled from 'styled-components';
 import { useState } from 'react';
-
 import { Modal } from '../../context/Modal';
 import LoginForm from './LoginForm';
+
+const Container = styled.div`
+  div {
+    transition: all 0.5s;
+    cursor: pointer;
+  }
+
+  div:hover {
+    transform: scale(1.1);
+  }
+`
 
 function LoginFormModal() {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <>
-      <button onClick={() => setShowModal(true)}>Log In</button>
+    <Container>
+      <div onClick={() => setShowModal(true)}>Log In</div>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           <LoginForm />
         </Modal>
       )}
-    </>
+    </Container>
   );
 }
 

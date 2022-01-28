@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from 'react-router-dom';
 
@@ -131,6 +131,10 @@ const NavBar = () => {
   const createSong = useCreateSongContext()
   const user = useSelector(state => state.session.user)
 
+  const handleLogout = async() => {
+    await dispatch(logout())
+  }
+
   return (
     <NavAndUploadContainer>
       <Nav>
@@ -166,9 +170,9 @@ const NavBar = () => {
               <span id="user-username">{user.username}</span>
               {/* <img id="chevron" src="https://cdn.discordapp.com/attachments/858135958729392152/936345963738591292/down-arrow.png"></img> */}
               <i id="chevron" class="fas fa-chevron-circle-down"></i>
-              {false &&
+              {true &&
               <ul id="profile-options">
-                <li onClick={logout}>Logout</li>
+                <li onClick={handleLogout}>Logout</li>
               </ul>}
             </div>}
           </li>

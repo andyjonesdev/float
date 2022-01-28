@@ -1,8 +1,106 @@
+import styled from 'styled-components';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ReactAudioPlayer from 'react-audio-player';
 import { Redirect } from 'react-router-dom';
 import { login } from '../../store/session';
+
+const LoginFormContainer = styled.div`
+background-image: url("https://media.discordapp.net/attachments/858135958729392152/933538598978998314/animesher.com_purple-clouds-pretty-anime-girl-cute-784074.png?width=435&height=509");
+height: 500px;
+width: 400px;
+box-shadow: 0px 0px 5px 1px;
+
+button {
+  transition: all 0.25s;
+  cursor: pointer;
+  color: white;
+  padding: 2% 0;
+  background-color: rgba(104,75,181, 0.9);
+  border: 1px solid black;
+  font-size: 1.25rem;
+  margin: 0 5%;
+}
+button:hover{
+  transform: scale(1.025);
+}
+
+#not-member {
+  display: flex;
+  justify-content: center;
+  margin: 0 5%;
+  padding-bottom: 10%;
+  border-bottom: 1px solid white;
+  // background: lightgreen;
+
+  span {
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    color: white;
+    background-color: rgba(104,75,181, 0.9);
+    font-size: 1.5rem;
+    padding: 2%;
+    padding-right: 1%;
+  }
+
+  a {
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    cursor: pointer;
+    padding: 2%;
+    color: white;
+    text-decoration: underline;
+    background-color: rgba(104,75,181, 0.9);
+    font-size: 1.5rem;
+  }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // background: lightgreen;
+    height: 100%;
+
+    .form-section {
+      display: flex;
+      padding: 0 5%;
+      margin: 5% 0;
+      flex-direction: column;
+      // background: green;
+
+      label {
+        color: white;
+        border: 1px solid black;
+        background-color: rgba(104,75,181, 0.9);
+        width: fit-content;
+        padding: 1%;
+        margin-bottom: 5px;
+        font-size: 1.25rem;
+      }
+
+      input {
+        transition: all 0.25s;
+        border: 1px solid grey;
+        background-color: rgb(207,218,245);
+        padding: 2%;
+        font-size: 1.20rem;
+      }
+      input:focus {
+        transform: scale(1.025)
+      }
+      input:hover {
+        border: 1px solid black;
+      }
+      input::placeholder {
+        color: black;
+        opacity: 0.6;
+      }
+    }
+  }
+`
 
 const LoginForm = () => {
   const [errors, setErrors] = useState([]);
@@ -32,34 +130,40 @@ const LoginForm = () => {
   // }
 
   return (
-    <form onSubmit={onLogin}>
-      <div>
-        {errors.map((error, ind) => (
-          <div key={ind}>{error}</div>
-        ))}
-      </div>
-      <div>
-        <label htmlFor='email'>Email</label>
-        <input
-          name='email'
-          type='text'
-          placeholder='Email'
-          value={email}
-          onChange={updateEmail}
-        />
-      </div>
-      <div>
-        <label htmlFor='password'>Password</label>
-        <input
-          name='password'
-          type='password'
-          placeholder='Password'
-          value={password}
-          onChange={updatePassword}
-        />
+    <LoginFormContainer>
+      <form onSubmit={onLogin}>
+        {errors.length > 0 && <div>
+          {errors.map((error, ind) => (
+            <div key={ind}>{error}</div>
+          ))}
+        </div>}
+        <div id="not-member">
+          <span>Not on float yet?</span>
+          <a>Sign up</a>
+        </div>
+        <div className="form-section">
+          <label htmlFor='email'>Email</label>
+          <input
+            name='email'
+            type='text'
+            placeholder='Your email address'
+            value={email}
+            onChange={updateEmail}
+          />
+        </div>
+        <div className="form-section">
+          <label htmlFor='password'>Password</label>
+          <input
+            name='password'
+            type='password'
+            placeholder='Password'
+            value={password}
+            onChange={updatePassword}
+          />
+        </div>
         <button type='submit'>Login</button>
-      </div>
-    </form>
+      </form>
+    </LoginFormContainer>
   );
 };
 
