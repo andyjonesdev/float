@@ -7,9 +7,38 @@ import { login } from '../../store/session';
 
 const LoginFormContainer = styled.div`
 background-image: url("https://media.discordapp.net/attachments/858135958729392152/933538598978998314/animesher.com_purple-clouds-pretty-anime-girl-cute-784074.png?width=435&height=509");
-height: 500px;
+background-size: cover;
+background-position: center;
+height: fit-content;
 width: 400px;
+padding: 10% 0;
 box-shadow: 0px 0px 5px 1px;
+transition: all 0.5s;
+
+#errors {
+  color: #ff0033;
+  margin: 0% 5%;
+  margin-bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+  width: fit-content;
+  border: 1px solid black;
+  padding: 2%;
+  background-color: rgba(104,75,181, 0.9);
+  list-style-type: circle;
+
+  .error {
+    align-self: flex-start;
+    margin-left: 5%;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    margin-bottom: 3%;
+  }
+}
 
 button {
   transition: all 0.25s;
@@ -132,11 +161,13 @@ const LoginForm = () => {
   return (
     <LoginFormContainer>
       <form onSubmit={onLogin}>
-        {errors.length > 0 && <div>
+        {errors.length > 0 &&
+        <ul id="errors">
+          <h2>The following errors were found: </h2>
           {errors.map((error, ind) => (
-            <div key={ind}>{error}</div>
+            <li className="error" key={ind}>{error}</li>
           ))}
-        </div>}
+        </ul>}
         <div id="not-member">
           <span>Not on float yet?</span>
           <a>Sign up</a>
