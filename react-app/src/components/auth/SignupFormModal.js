@@ -14,15 +14,15 @@ const Container = styled.div`
   }
 `
 
-function LoginFormModal() {
-  const [showModal, setShowModal] = useState(false);
+function SignupFormModal() {
+  const [showSignup, setShowSignup] = useState(false);
 
   return (
     <Container>
-      <div onClick={() => setShowModal(true)}>Log In</div>
+      <div onClick={() => setShowSignup(true)}>Sign up</div>
       {showModal && (
-        <Modal onClose={() => setShowModal(false)}>
-          <LoginForm />
+        <Modal onClose={() => setShowSignup(false)}>
+          <SignupForm />
         </Modal>
       )}
     </Container>
