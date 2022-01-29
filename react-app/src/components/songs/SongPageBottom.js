@@ -1,7 +1,9 @@
 import styled from "styled-components"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
 import Comment from "../comments/Comment"
+import { createComment } from "../../store/comments"
+
 
 const SongPageBottomContainer = styled.div`
     margin-top: 2%;
@@ -21,14 +23,14 @@ const SongPageBottomContainer = styled.div`
         #pfp-and-add-comment {
             display: flex;
             flex-direction: row;
-            background: rgb(196,160,212);
+            // background: rgb(196,160,212);
             // height: fit-content;
             margin: 10px 0;
             width: 90%;
 
             #comment-pfp {
                 // background: pink;
-                border-right: 1px solid grey;
+                // border-right: 1px solid grey;
                 width: 70px;
                 height: 70px;
 
@@ -39,6 +41,7 @@ const SongPageBottomContainer = styled.div`
 
             #comment-form {
                 display: flex;
+                position: relative;
                 justify-content: center;
                 align-items: center;
                 // background: lightblue;
@@ -52,6 +55,19 @@ const SongPageBottomContainer = styled.div`
                     height: 70%;
                     width: 95%;
                     // background: lightblue;
+                }
+
+                #post-comment {
+                    cursor: pointer;
+                    transition: all 0.25s;
+                    width: 4%;
+                    position: absolute;
+                    right: 20px;
+                    padding: 5px;
+                    border-left: 1px solid grey;
+                }
+                #post-comment:hover {
+                    transform: scale(1.05);
                 }
             }
         }
@@ -161,6 +177,16 @@ const SongPageBottomContainer = styled.div`
 const SongPageBottom = () => {
     const song = useSelector(state => state.songs.entities.song)
     const user = useSelector(state => state.session.user)
+    const dispatch = useDispatch()
+
+    const handleCreateComment = async() => {
+        const content = document.querySelector("#comment-input").value
+
+        await dispatch(createComment({
+            content,
+            songId: song.id
+        }))
+    }
 
     if (!song) return <></>
 
@@ -171,11 +197,12 @@ const SongPageBottom = () => {
                     <div id="comment-pfp">
                         <img src={user ? user.image : "https://media.discordapp.net/attachments/858135958729392152/935040055888719892/user.png"}></img>
                     </div>
-                    <form id="comment-form">
+                    <form onSubmit={handleCreateComment} id="comment-form">
                         <input
                         id="comment-input"
                         placeholder="How does this song make you feel?"
                         ></input>
+                        <img onClick={handleCreateComment} id="post-comment" src="https://cdn.discordapp.com/attachments/858135958729392152/934933099018588180/message.png"></img>
                     </form>
                 </div>
             </div>

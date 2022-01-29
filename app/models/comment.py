@@ -12,11 +12,11 @@ class Comment(db.Model):
     created_at = db.Column(db.DateTime, server_default=func.now())
     updated_at = db.Column(db.DateTime, server_default=func.now(), onupdate=func.now())
 
-    
+
     song = db.relationship(
        'Song', back_populates='comments')
     user = db.relationship(
-       'User', back_populates='songs')
+       'User', back_populates='comments')
 
     def to_dict(self):
         return {
@@ -25,5 +25,6 @@ class Comment(db.Model):
             'songId': self.song_id,
             'content': self.content,
             'createdAt': self.created_at,
-            'updatedAt': self.updated_at
+            'updatedAt': self.updated_at,
+            'userImage': self.user.image
         }
