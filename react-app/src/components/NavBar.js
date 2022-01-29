@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 import CreateSongProvider, { useCreateSongContext } from "../context/CreateSongProvider";
 import CreateSongForm from "./songs/CreateSongForm";
+import SignupFormModal from "./auth/SignupFormModal";
 import EditSongForm from "./songs/EditSongForm";
 import EditSongProvider from "../context/EditSongProvider";
 import LoginFormModal from "./auth/LoginFormModal";
@@ -153,13 +154,16 @@ const NavBar = () => {
           <li id="search">
             Search
           </li>
-          <li
+          {user && <li
           onClick={() => {
             createSong.visible ? createSong.hide() : createSong.show();
           }}
           id="upload">
             Upload
-          </li>
+          </li>}
+          {!user && <li id="upload">
+            <SignupFormModal />
+          </li>}
           <li id="profile">
             {!user && <LoginFormModal />}
             {user &&
