@@ -13,6 +13,7 @@ class User(db.Model, UserMixin):
     image = db.Column(db.String, nullable=True)
 
     songs = db.relationship("Song", back_populates="user")
+    comments = db.relationship("Comment", back_populates="user")
 
     @property
     def password(self):
