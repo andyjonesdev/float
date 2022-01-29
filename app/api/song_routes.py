@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from flask_login import current_user, login_required
 from sqlalchemy import desc
-from app.models import User, Song, db
+from app.models import User, Song, Comment, db
 from app.forms import validation_errors_to_error_messages_dict, CreateSongForm
 
 song_routes = Blueprint('songs', __name__)
@@ -17,6 +17,23 @@ def get_a_song(song_id):
     songDict = song.to_dict()
     songDict["artist"], songDict["artistImage"] = songDict["artist"]["username"], songDict["artist"]["image"]
     return songDict, 201
+
+# GET /api/songs/:songId/comments
+@song_routes.route("/<int:song_id>/comments")
+def get_song_comments(song_id):
+    comments = Comment.query.filter_by(song_id=song_id).all()
+    print("COMMENTS FOR THIS SONG ------->", comments)
+
+    # if not comments:
+    #     return abort(404)
+
+    comment_dict = {}
+    for comment in comments:
+        print(f'comment {comment.id} ---> {comment}')
+        comment_dict[comment.id] = comment.to_dict()
+
+    print(f'comment_dict ---> {comment_dict}')
+    return comment_dict, 201
 
 # PUT /api/songs/:songId
 @song_routes.route("/<int:song_id>", methods=["PUT"])

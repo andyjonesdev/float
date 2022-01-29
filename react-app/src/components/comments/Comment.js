@@ -70,18 +70,20 @@ const CommentContainer = styled.div`
     }
 `
 
-const Comment = () => {
+const Comment = ({ comment }) => {
+    if (!comment) return <></>
+
     return(
         <CommentContainer>
             <div id="commenter-pfp">
-                <img src="https://cdn.discordapp.com/attachments/858135958729392152/934938618592641115/Sakura_Espeon-0.png"></img>
+                <img src={comment.userImage ? comment.userImage : "https://media.discordapp.net/attachments/858135958729392152/935040055888719892/user.png"}></img>
             </div>
             <div id="commenter-name-and-comment">
-                <div id="commenter-name">{testComment.commenterName}</div>
-                <div id="commenter-comment">{testComment.content}</div>
+                <div id="commenter-name">{comment.userName}</div>
+                <div id="commenter-comment">{comment.content}</div>
             </div>
             <div id="commented-date">
-                <span>9 days ago</span>
+                <span>{comment.createdAt.split(" ").slice(1, 4).join(" ")}</span>
             </div>
         </CommentContainer>
     )

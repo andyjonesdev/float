@@ -1,8 +1,10 @@
 import styled from "styled-components"
 import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
+import { useParams } from "react-router-dom"
 
 import Comment from "../comments/Comment"
-import { createComment } from "../../store/comments"
+import { createComment, getSongComments } from "../../store/comments"
 
 
 const SongPageBottomContainer = styled.div`
@@ -156,6 +158,11 @@ const SongPageBottomContainer = styled.div`
             padding-top: 2%;
             padding-left: 15%;
 
+            #no-comments {
+                margin-top: 20px;
+                margin-bottom: 100px;
+            }
+
             #comments-amount {
                 display: flex;
                 align-items: center;
@@ -175,9 +182,26 @@ const SongPageBottomContainer = styled.div`
 `
 
 const SongPageBottom = () => {
+    const { songId } = useParams()
     const song = useSelector(state => state.songs.entities.song)
     const user = useSelector(state => state.session.user)
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getSongComments(songId))
+    }, [])
+
+    const comments = useSelector(state => state.comments.entities.songComments)
+
+    const renderComments = (commentsObj) => {
+        const commentsToRender = []
+        for (let comment in commentsObj) {
+            commentsToRender.push(
+                <Comment comment={commentsObj[comment]}/>
+            )
+        }
+        return commentsToRender
+    }
 
     const handleCreateComment = async() => {
         const content = document.querySelector("#comment-input").value
@@ -188,14 +212,14 @@ const SongPageBottom = () => {
         }))
     }
 
-    if (!song) return <></>
+    if (!song || !comments) return <></>
 
     return(
         <SongPageBottomContainer>
             <div id="write-comment">
                 <div id="pfp-and-add-comment">
                     <div id="comment-pfp">
-                        <img src={user ? user.image : "https://media.discordapp.net/attachments/858135958729392152/935040055888719892/user.png"}></img>
+                        <img src={user.image ? user.image : "https://media.discordapp.net/attachments/858135958729392152/935040055888719892/user.png"}></img>
                     </div>
                     <form onSubmit={handleCreateComment} id="comment-form">
                         <input
@@ -225,7 +249,7 @@ const SongPageBottom = () => {
                         </div>
                         <div id="description">
                             {song.description && <span>About this song:</span>}
-                            {song.description}
+                            <div>{song.description}</div>
                         </div>
                     </div>
                 </div>
@@ -235,12 +259,9 @@ const SongPageBottom = () => {
                         <span>1,841 comments</span>
                     </div>
                     <div>
-                        <Comment />
-                        <Comment />
-                        <Comment />
-                        <Comment />
-                        <Comment />
-                        <Comment />
+                        {renderComments(comments)}
+                        {Object.keys(comments).length === 0 &&
+                        <div id="no-comments">There are no comments for this vibe yet. Be the first?</div>}
                     </div>
                 </div>
             </div>

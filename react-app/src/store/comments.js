@@ -21,7 +21,22 @@ export const createComment = createAsyncThunk(
     }
 );
 
-const initialState = { entities: { songComments: {} } }
+export const getSongComments = createAsyncThunk(
+    "comments/getSongComments",
+    async (songId, thunkAPI) => {
+        const response = await fetch(`/api/songs/${songId}/comments`);
+        const data = await response.json();
+        if (response.ok && !data.errors) {
+            return data;
+        } else if (response.status < 500) {
+            throw thunkAPI.rejectWithValue(data.errors);
+        } else {
+            throw thunkAPI.rejectWithValue(["An error occurred. Please try again."]);
+        }
+    }
+);
+
+const initialState = { entities: { songComments: null } }
 
 const commentsSlice = createSlice({
     name: "comments",
@@ -29,6 +44,9 @@ const commentsSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(createComment.fulfilled, (state, action) => {
             state.entities.songComments[action.payload.id] = action.payload;
+        });
+        builder.addCase(getSongComments.fulfilled, (state, action) => {
+            state.entities.songComments = action.payload
         });
     },
 });
