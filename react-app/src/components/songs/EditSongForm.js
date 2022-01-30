@@ -51,6 +51,20 @@ const SongForm = styled.form`
         color: pink;
     }
 
+    #errors {
+        color: red;
+
+        li {
+            list-style-type: circle;
+            margin-left: 15px;
+        }
+
+        h2 {
+            margin-bottom: 5px;
+            // font-size: 1.1rem;
+        }
+    }
+
     textarea {
         display: flex;
         resize: none;
@@ -74,27 +88,35 @@ const SongForm = styled.form`
 
 
 const EditSongForm = () => {
+    const [errors, setErrors] = useState([])
     const editSongForm = useEditSongContext()
     const dispatch = useDispatch()
     const history = useHistory()
     const song = useSelector(state => state.songs.entities.song)
 
 
-    const handleEdit = (e) => {
+    const handleEdit = async(e) => {
         e.preventDefault();
         let title = document.querySelector("#edit-title").value
         let image = document.querySelector("#edit-image").value
         let description = document.querySelector("#edit-description").value
         let audio = document.querySelector("#edit-audio").value
-        console.log("IMAGE ----->", image )
-        console.log("AUDIO ----->", audio )
-        dispatch(editSong({
+        const data = await dispatch(editSong({
             title,
             description,
             image,
             audio,
             songId: song.id,
         }))
+        if (!Object.keys(data).includes("error")) {
+            editSongForm.hide();
+        } else {
+            let errors = []
+            for (let [field, message] of Object.entries(data.payload)) {
+                errors.push(`${field}: ${message}`)
+            }
+            setErrors(errors)
+        }
     }
 
     const handleDelete = (e) => {
@@ -109,6 +131,13 @@ const EditSongForm = () => {
         <SongFormContainer>
             <SongForm className={editSongForm.visible ? "visible" : ""}
             onSubmit={handleEdit}>
+                {errors.length > 0 &&
+                <ul id="errors">
+                    <h2>The following errors were found: </h2>
+                    {errors.map((error, ind) => (
+                    <li className="error" key={ind}>{error}</li>
+                    ))}
+                </ul>}
                 <div className="field">
                     <label for="title">Song Title</label>
                     <input id="edit-title" type="text" name="title" defaultValue={song.title}></input>
