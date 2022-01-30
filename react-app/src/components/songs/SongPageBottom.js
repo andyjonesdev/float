@@ -49,6 +49,7 @@ const SongPageBottomContainer = styled.div`
                 // background: lightblue;
                 height: 70px;
                 width: 100%;
+                border-radius: 10px;
 
                 #comment-input {
                     border: 1px solid grey;
@@ -56,6 +57,7 @@ const SongPageBottomContainer = styled.div`
                     font-size: 1rem;
                     height: 70%;
                     width: 95%;
+                    border-radius: 10px;
                     // background: lightblue;
                 }
 
@@ -219,14 +221,14 @@ const SongPageBottom = () => {
             <div id="write-comment">
                 <div id="pfp-and-add-comment">
                     <div id="comment-pfp">
-                        <img src={user.image ? user.image : "https://media.discordapp.net/attachments/858135958729392152/935040055888719892/user.png"}></img>
+                        <img src={user ? user.image ? user.image : "https://media.discordapp.net/attachments/858135958729392152/935040055888719892/user.png" : "https://media.discordapp.net/attachments/858135958729392152/935040055888719892/user.png"}></img>
                     </div>
                     <form onSubmit={handleCreateComment} id="comment-form">
                         <input
                         id="comment-input"
                         placeholder="How does this song make you feel?"
                         ></input>
-                        <img onClick={handleCreateComment} id="post-comment" src="https://cdn.discordapp.com/attachments/858135958729392152/934933099018588180/message.png"></img>
+                        <img onClick={handleCreateComment} id="post-comment" src="https://media.discordapp.net/attachments/858135958729392152/937149721921863750/message_1.png"></img>
                     </form>
                 </div>
             </div>
@@ -255,8 +257,8 @@ const SongPageBottom = () => {
                 </div>
                 <div id="comments">
                     <div id="comments-amount">
-                        <img id="comments-icon" src="https://cdn.discordapp.com/attachments/858135958729392152/934933099018588180/message.png"></img>
-                        <span>1,841 comments</span>
+                        <img id="comments-icon" src="https://media.discordapp.net/attachments/858135958729392152/937149721921863750/message_1.png"></img>
+                        <span>{Object.keys(comments).length} comments</span>
                     </div>
                     <div>
                         {renderComments(comments)}

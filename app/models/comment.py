@@ -28,4 +28,5 @@ class Comment(db.Model):
             'updatedAt': self.updated_at,
             'userImage': self.user.image,
             'userName': self.user.username,
+            'userId': self.user.id
         }

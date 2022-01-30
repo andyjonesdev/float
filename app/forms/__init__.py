@@ -2,6 +2,7 @@ from .login_form import LoginForm
 from .signup_form import SignUpForm
 from .create_song_form import CreateSongForm
 from .create_comment_form import CreateCommentForm
+from .edit_comment_form import EditCommentForm
 
 # credit to Justin Russo for below utility @justinrusso
 def validation_errors_to_error_messages_dict(validation_errors):
