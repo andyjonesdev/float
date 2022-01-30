@@ -5,7 +5,7 @@ import LoginForm from './LoginForm';
 
 const Container = styled.div`
   div {
-    transition: all 0.5s;
+    transition: all 0.25s;
     cursor: pointer;
   }
 
