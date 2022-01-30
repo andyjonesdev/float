@@ -27,12 +27,6 @@ function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
 
-  // const bulkCreateLocalSongs = (songsArray) => {
-  //   songsArray.forEach(songObj => {
-  //     dispatch()
-  //   })
-  // }
-
   useEffect(() => {
     (async() => {
       await dispatch(authenticate());

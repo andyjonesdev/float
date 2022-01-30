@@ -2,13 +2,11 @@ import styled from "styled-components"
 import { useSelector } from "react-redux"
 import { useEditSongContext } from "../../context/EditSongProvider"
 import { usePlayer } from "../../context/PlayerProvider"
+import TimeAgo from "javascript-time-ago"
+import en from "javascript-time-ago/locale/en.json"
 
-const testSong = {
-    artist: "Jhené Aiko",
-    title: "Sativa (feat. Swae Lee)",
-    image: "https://media.discordapp.net/attachments/928062866412683274/933176102141173810/unknown.png",
-    audio: "https://cdn.discordapp.com/attachments/858135958729392152/933475310001856532/Jhene_Aiko_-_Sativa_ft._Swae_Lee_Official_Audio_1.mp3"
-}
+TimeAgo.addDefaultLocale(en);
+const timeAgo = new TimeAgo('en-US')
 
 const SongPageTopContainer = styled.div`
     display: flex;
@@ -141,7 +139,7 @@ const SongPageTop = () => {
                         <div id="artist">{song.artist}</div>
                     </div>
                     <div id="date-info">
-                        <div id="date">4 years ago</div>
+                        <div id="date">{timeAgo.format(Date.parse(song.createdAt))}</div>
                         {song.userId === user?.id && <img onClick={() => editSong.show()} src="https://cdn.discordapp.com/attachments/858135958729392152/936043833567871006/settings.png"></img>}
                     </div>
                 </div>

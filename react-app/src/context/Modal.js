@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 
 const ModalContainer = styled.div`
     #modal {
+        z-index: 1000;
         position: fixed;
         top: 0;
         right: 0;
@@ -20,10 +21,12 @@ const ModalContainer = styled.div`
         right: 0;
         left: 0;
         bottom: 0;
+        z-index: 1000;
         background-color: rgba(0, 0, 0, 0.7);
-    }
+      }
 
-    #modal-content {
+      #modal-content {
+        z-index: 1001;
         position: absolute;
         background-color:white;
     }

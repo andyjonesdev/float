@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 
 import CreateSongProvider, { useCreateSongContext } from "../context/CreateSongProvider";
 import CreateSongForm from "./songs/CreateSongForm";
+import SignupFormModal from "./auth/SignupFormModal";
 import EditSongForm from "./songs/EditSongForm";
 import EditSongProvider from "../context/EditSongProvider";
 import LoginFormModal from "./auth/LoginFormModal";
@@ -31,7 +32,7 @@ const Nav = styled.nav`
     font-style: italic;
   }
   #float:hover {
-    padding: 2px;
+    // padding: 2px;
     // background: rgb(208,154,245);
     transform: scale(1.05);
   }
@@ -69,16 +70,73 @@ const Nav = styled.nav`
       width: 15%;
     }
 
-    #search {
-      width: 35%;
+    #home-long {
+      display: flex;
+      font-family: 'Nanum Myeongjo', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      width: 25%;
+    }
+
+    #all-songs {
+      cursor: pointer;
+      width: 15%;
+
+      div {
+        transition: all 0.25s;
+      }
+      div:hover {
+        transform: scale(1.1);
+      }
+    }
+
+    #logout {
+      cursor: pointer;
+      width: 10%;
+
+      div {
+        transition: all 0.25s;
+      }
+      div:hover {
+        transform: scale(1.1);
+      }
+    }
+
+    #about {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      width: 15%;
+
+      img {
+        cursor: pointer;
+        transition: all 0.25s;
+        aspect-ratio: 1;
+        width: 20%;
+        border-radius: 50%;
+      }
+      img:hover {
+        background: rgb(208,154,245);
+        transform: scale(1.05);
+      }
     }
 
     #upload, #profile {
-      width: 17.5%;
+      width: 15%;
+    }
+
+    #upload {
+      cursor: pointer;
+
+      div {
+        transition: all 0.25s;
+      }
+      div:hover {
+        transform: scale(1.1);
+      }
     }
 
     #user-info{
-      cursor: pointer;
       position: relative;
       // background: lightgreen;
       display: flex;
@@ -127,6 +185,7 @@ const Nav = styled.nav`
 
 
 const NavBar = () => {
+  const history = useHistory()
   const dispatch = useDispatch()
   const createSong = useCreateSongContext()
   const user = useSelector(state => state.session.user)
@@ -145,36 +204,46 @@ const NavBar = () => {
               {/* <img src="https://pbs.twimg.com/media/Dm1Zg7EWwAIT3ro.png"></img> */}
             </NavLink>
           </li>
-          <li id="home">
+          {user && <li id="home">
             <NavLink to='/' exact={true} activeClassName='active'>
               <div id="float">f l o a t .</div>
             </NavLink>
+          </li>}
+          {!user && <li id="home-long">
+            <NavLink to='/' exact={true} activeClassName='active'>
+              <div id="float">f l o a t .</div>
+            </NavLink>
+          </li>}
+          <li id="all-songs">
+            <div>All songs</div>
           </li>
-          <li id="search">
-            Search
-          </li>
-          <li
+          {user && <li
           onClick={() => {
             createSong.visible ? createSong.hide() : createSong.show();
           }}
           id="upload">
-            Upload
-          </li>
+            <div>Upload</div>
+          </li>}
+          {!user && <li id="upload">
+            <SignupFormModal />
+          </li>}
           <li id="profile">
             {!user && <LoginFormModal />}
             {user &&
             <div id="user-info">
               <div id="user-pfp-container">
-                <img src={user ? user.image : "https://media.discordapp.net/attachments/858135958729392152/935040055888719892/user.png"}></img>
+                <img src={user ? user.image ? user.image : "https://media.discordapp.net/attachments/858135958729392152/935040055888719892/user.png" : "https://media.discordapp.net/attachments/858135958729392152/935040055888719892/user.png"}></img>
               </div>
               <span id="user-username">{user.username}</span>
-              {/* <img id="chevron" src="https://cdn.discordapp.com/attachments/858135958729392152/936345963738591292/down-arrow.png"></img> */}
-              <i id="chevron" class="fas fa-chevron-circle-down"></i>
-              {true &&
-              <ul id="profile-options">
-                <li onClick={handleLogout}>Logout</li>
-              </ul>}
             </div>}
+          </li>
+          {user &&
+          <li onClick={handleLogout} id="logout">
+            <div>Log out</div>
+          </li>}
+          <li id="about">
+            <img onClick={() => window.open("https://github.com/andyrose507")} src="https://media.discordapp.net/attachments/858135958729392152/937417777793347614/github_1.png"></img>
+            <img onClick={() => window.open("https://www.linkedin.com/in/andy-jones-a2519b173/")} src="https://media.discordapp.net/attachments/858135958729392152/937417953132052500/linkedin_2.png"></img>
           </li>
         </ul>
       </Nav>

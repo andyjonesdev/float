@@ -1,10 +1,9 @@
 import styled from "styled-components"
 import { useState } from "react"
+import { useHistory } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { createSong } from "../../store/songs"
 import { useCreateSongContext } from "../../context/CreateSongProvider"
-
-import ohMyLove from "../../audio/ohmylove.mp3"
 
 const SongFormContainer = styled.div`
     .visible {
@@ -40,6 +39,20 @@ const SongFormContainer = styled.div`
         color: pink;
     }
 
+    #errors {
+        color: red;
+
+        li {
+            list-style-type: circle;
+            margin-left: 15px;
+        }
+
+        h2 {
+            margin-bottom: 5px;
+            // font-size: 1.1rem;
+        }
+    }
+
     textarea {
         display: flex;
         resize: none;
@@ -63,32 +76,46 @@ const SongFormContainer = styled.div`
 
 
 const CreateSongForm = () => {
+    const [errors, setErrors] = useState([])
+    const history = useHistory()
     const createSongForm = useCreateSongContext()
     const dispatch = useDispatch()
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
         let title = document.querySelector("#new-title").value
         let image = document.querySelector("#new-image").value
         let description = document.querySelector("#new-description").value
         let audio = document.querySelector("#new-audio").value
-        console.log("IMAGE ----->", image )
-        console.log("AUDIO ----->", audio )
-        dispatch(createSong({
+        const data = await dispatch(createSong({
             title,
             description,
             image,
             audio,
-            // audio: ohMyLove,
         }))
+        if (!Object.keys(data).includes("error")) {
+            createSongForm.hide();
+            history.push(`/songs/${data.payload.id}`)
+        } else {
+            let errors = []
+            for (let [field, message] of Object.entries(data.payload)) {
+                errors.push(`${field}: ${message}`)
+            }
+            setErrors(errors)
+        }
     }
-
-    // if (!createSongForm.visible) return <></>
 
     return(
         <SongFormContainer>
             <SongForm className={createSongForm.visible ? "visible" : ""}
             onSubmit={handleSubmit}>
+                {errors.length > 0 &&
+                <ul id="errors">
+                    <h2>The following errors were found: </h2>
+                    {errors.map((error, ind) => (
+                    <li className="error" key={ind}>{error}</li>
+                    ))}
+                </ul>}
                 <div className="field">
                     <label for="title">Song Title</label>
                     <input id="new-title" type="text" name="title"></input>

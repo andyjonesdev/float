@@ -1,7 +1,11 @@
 import styled from "styled-components"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 
 import Comment from "../comments/Comment"
+import { createComment, getSongComments } from "../../store/comments"
+
 
 const SongPageBottomContainer = styled.div`
     margin-top: 2%;
@@ -13,22 +17,37 @@ const SongPageBottomContainer = styled.div`
 
     #write-comment {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         height: 15%;
         border-bottom: 1px solid grey;
 
+        #errors {
+            margin-top: 10px;
+            color: red;
+
+            li {
+                list-style-type: circle;
+                margin-left: 15px;
+            }
+
+            h2 {
+                margin-bottom: 5px;
+            }
+        }
+
         #pfp-and-add-comment {
             display: flex;
             flex-direction: row;
-            background: rgb(196,160,212);
+            // background: rgb(196,160,212);
             // height: fit-content;
             margin: 10px 0;
             width: 90%;
 
             #comment-pfp {
                 // background: pink;
-                border-right: 1px solid grey;
+                // border-right: 1px solid grey;
                 width: 70px;
                 height: 70px;
 
@@ -39,11 +58,13 @@ const SongPageBottomContainer = styled.div`
 
             #comment-form {
                 display: flex;
+                position: relative;
                 justify-content: center;
                 align-items: center;
                 // background: lightblue;
                 height: 70px;
                 width: 100%;
+                border-radius: 10px;
 
                 #comment-input {
                     border: 1px solid grey;
@@ -51,7 +72,21 @@ const SongPageBottomContainer = styled.div`
                     font-size: 1rem;
                     height: 70%;
                     width: 95%;
+                    border-radius: 10px;
                     // background: lightblue;
+                }
+
+                #post-comment {
+                    cursor: pointer;
+                    transition: all 0.25s;
+                    width: 4%;
+                    position: absolute;
+                    right: 20px;
+                    padding: 5px;
+                    border-left: 1px solid grey;
+                }
+                #post-comment:hover {
+                    transform: scale(1.05);
                 }
             }
         }
@@ -121,13 +156,17 @@ const SongPageBottomContainer = styled.div`
 
                     span:first-child {
                         font-weight: bold;
-                        margin-bottom: 0.25%;
+                        margin-bottom: 5px;
                     }
                 }
 
                 #description {
                     margin-top: 2%;
                     margin-bottom: 1%;
+
+                    div {
+                        margin-top: 5px;
+                    }
 
                     span:first-child {
                         font-weight: bold;
@@ -139,6 +178,11 @@ const SongPageBottomContainer = styled.div`
             height: fit-content;
             padding-top: 2%;
             padding-left: 15%;
+
+            #no-comments {
+                margin-top: 20px;
+                margin-bottom: 100px;
+            }
 
             #comments-amount {
                 display: flex;
@@ -159,23 +203,69 @@ const SongPageBottomContainer = styled.div`
 `
 
 const SongPageBottom = () => {
+    const [errors, setErrors] = useState([])
+    const { songId } = useParams()
     const song = useSelector(state => state.songs.entities.song)
     const user = useSelector(state => state.session.user)
+    const dispatch = useDispatch()
 
-    if (!song) return <></>
+    useEffect(() => {
+        dispatch(getSongComments(songId))
+    }, [])
+
+    const comments = useSelector(state => state.comments.entities.songComments)
+
+    const renderComments = (commentsObj) => {
+        const commentsToRender = []
+        for (let comment in commentsObj) {
+            commentsToRender.push(
+                <Comment comment={commentsObj[comment]}/>
+            )
+        }
+        return commentsToRender
+    }
+
+    const handleCreateComment = async(e) => {
+        e.preventDefault()
+        let content = document.querySelector("#comment-input").value
+
+        const data = await dispatch(createComment({
+            content,
+            songId: song.id
+        }))
+        if (!Object.keys(data).includes("error")) {
+            document.querySelector("#comment-input").value = ""
+        } else {
+            let errors = []
+            for (let [field, message] of Object.entries(data.payload)) {
+                errors.push(`${field}: ${message}`)
+            }
+            setErrors(errors)
+        }
+    }
+
+    if (!song || !comments) return <></>
 
     return(
         <SongPageBottomContainer>
             <div id="write-comment">
+                {errors.length > 0 &&
+                <ul id="errors">
+                    <h2>The following errors were found: </h2>
+                    {errors.map((error, ind) => (
+                    <li className="error" key={ind}>{error}</li>
+                    ))}
+                </ul>}
                 <div id="pfp-and-add-comment">
                     <div id="comment-pfp">
-                        <img src={user ? user.image : "https://media.discordapp.net/attachments/858135958729392152/935040055888719892/user.png"}></img>
+                        <img src={user ? user.image ? user.image : "https://media.discordapp.net/attachments/858135958729392152/935040055888719892/user.png" : "https://media.discordapp.net/attachments/858135958729392152/935040055888719892/user.png"}></img>
                     </div>
-                    <form id="comment-form">
+                    <form onSubmit={handleCreateComment} id="comment-form">
                         <input
                         id="comment-input"
                         placeholder="How does this song make you feel?"
                         ></input>
+                        <img onClick={handleCreateComment} id="post-comment" src="https://media.discordapp.net/attachments/858135958729392152/937149721921863750/message_1.png"></img>
                     </form>
                 </div>
             </div>
@@ -198,22 +288,19 @@ const SongPageBottom = () => {
                         </div>
                         <div id="description">
                             {song.description && <span>About this song:</span>}
-                            {song.description}
+                            <div>{song.description}</div>
                         </div>
                     </div>
                 </div>
                 <div id="comments">
                     <div id="comments-amount">
-                        <img id="comments-icon" src="https://cdn.discordapp.com/attachments/858135958729392152/934933099018588180/message.png"></img>
-                        <span>1,841 comments</span>
+                        <img id="comments-icon" src="https://media.discordapp.net/attachments/858135958729392152/937149721921863750/message_1.png"></img>
+                        <span>{Object.keys(comments).length} comments</span>
                     </div>
                     <div>
-                        <Comment />
-                        <Comment />
-                        <Comment />
-                        <Comment />
-                        <Comment />
-                        <Comment />
+                        {renderComments(comments)}
+                        {Object.keys(comments).length === 0 &&
+                        <div id="no-comments">There are no comments for this vibe yet. Be the first?</div>}
                     </div>
                 </div>
             </div>

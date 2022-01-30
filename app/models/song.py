@@ -1,4 +1,3 @@
-from sqlalchemy import PrimaryKeyConstraint
 from sqlalchemy.sql import func
 
 from .db import db
@@ -15,9 +14,8 @@ class Song(db.Model):
     created_at = db.Column(db.DateTime, server_default=func.now())
     updated_at = db.Column(db.DateTime, server_default=func.now(), onupdate=func.now())
 
-    # later "comments" relationship
-    # comments = db.relationship(
-    #    'Comment', back_populates='song', cascade='all, delete')
+    comments = db.relationship(
+       'Comment', back_populates='song', cascade='all, delete')
     user = db.relationship(
        'User', back_populates='songs')
 

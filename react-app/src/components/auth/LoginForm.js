@@ -49,6 +49,7 @@ button {
   border: 1px solid black;
   font-size: 1.25rem;
   margin: 0 5%;
+  margin-bottom: 10px;
 }
 button:hover{
   transform: scale(1.025);
@@ -60,7 +61,6 @@ button:hover{
   margin: 0 5%;
   padding-bottom: 10%;
   border-bottom: 1px solid white;
-  // background: lightgreen;
 
   span {
     border-left: 1px solid black;
@@ -146,6 +146,11 @@ const LoginForm = () => {
     }
   };
 
+  const demoLogin = async(e) => {
+    e.preventDefault()
+    await dispatch(login("demo@aa.io", "password"))
+  }
+
   const updateEmail = (e) => {
     setEmail(e.target.value);
   };
@@ -153,10 +158,6 @@ const LoginForm = () => {
   const updatePassword = (e) => {
     setPassword(e.target.value);
   };
-
-  // if (user) {
-  //   return <Redirect to='/' />;
-  // }
 
   return (
     <LoginFormContainer>
@@ -192,7 +193,8 @@ const LoginForm = () => {
             onChange={updatePassword}
           />
         </div>
-        <button type='submit'>Login</button>
+        <button type='submit'>Log in</button>
+        <button onClick={demoLogin}>Demo user</button>
       </form>
     </LoginFormContainer>
   );

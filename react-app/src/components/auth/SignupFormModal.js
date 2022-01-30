@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { Modal } from '../../context/Modal';
+import SignupForm from './SignUpForm'
 import LoginForm from './LoginForm';
 
 const Container = styled.div`
   div {
-    transition: all 0.5s;
+    transition: all 0.25s;
     cursor: pointer;
   }
 
@@ -20,7 +21,7 @@ function SignupFormModal() {
   return (
     <Container>
       <div onClick={() => setShowSignup(true)}>Sign up</div>
-      {showModal && (
+      {showSignup && (
         <Modal onClose={() => setShowSignup(false)}>
           <SignupForm />
         </Modal>
@@ -29,4 +30,4 @@ function SignupFormModal() {
   );
 }
 
-export default LoginFormModal;
+export default SignupFormModal;
