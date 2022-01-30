@@ -8,11 +8,13 @@ const CommentContainer = styled.div`
     border-bottom: 1px solid grey;
     display: flex;
     flex-direction: row;
+    position: relative;
     width: 100%;
-    height: 75px;
+    height: fit-content;
 
     #commenter-pfp {
-        height: 100%;
+        height: 75px;
+        // height: 100%;
         aspect-ratio: 1;
         border-radius: 50%;
         overflow: hidden;
@@ -26,6 +28,17 @@ const CommentContainer = styled.div`
         width: 77%;
         height: 100%;
         padding-left: 1%;
+
+        #errors {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            color: red;
+
+            li {
+                list-style-type: circle;
+                margin-left: 15px;
+            }
+        }
 
         #commenter-name {
             color: #5e5d5e;
@@ -46,7 +59,6 @@ const CommentContainer = styled.div`
         }
 
         #edit-form {
-
             #edit-textarea {
                 resize: none;
                 height: 50px;
@@ -60,7 +72,7 @@ const CommentContainer = styled.div`
         flex-direction: column;
         align-items: flex-end;
         margin-right: 20px;
-        position: relative;
+        // position: relative;
         // background: red;
         width: 15%;
         height: 100%;
@@ -70,8 +82,8 @@ const CommentContainer = styled.div`
             // background-color: green;
             display: flex;
             justify-content: flex-end;
-            right: 0;
-            bottom: 0;
+            right: 20px;
+            bottom: 10px;
             // width: fit-content;
 
             button {
@@ -81,7 +93,7 @@ const CommentContainer = styled.div`
                 transition: all 0.25s;
                 border: 1px solid black;
                 aspect-ratio: 1;
-                width: 25%;
+                width: 35px;
 
                 img {
                     aspect-ratio: 1;
@@ -108,6 +120,7 @@ const CommentContainer = styled.div`
 
 const Comment = ({ comment }) => {
     const [showEdit, setShowEdit] = useState(false)
+    const [errors, setErrors] = useState([])
     const user = useSelector(state => state.session.user)
     const dispatch = useDispatch()
 
@@ -120,11 +133,20 @@ const Comment = ({ comment }) => {
 
     const handleEditComment = async() => {
         const content = document.querySelector("#edit-textarea").value
-        await dispatch(editComment({
+        const data = await dispatch(editComment({
             commentId: comment.id,
             content
         }))
-        setShowEdit(false)
+        if (!Object.keys(data).includes("error")) {
+            setShowEdit(false)
+            setErrors([])
+        } else {
+            let errors = []
+            for (let [field, message] of Object.entries(data.payload)) {
+                errors.push(`${field}: ${message}`)
+            }
+            setErrors(errors)
+        }
     }
 
     if (!comment) return <></>
@@ -136,6 +158,12 @@ const Comment = ({ comment }) => {
             </div>
             <div id="commenter-name-and-comment">
                 <div id="commenter-name">{comment.userName}</div>
+                {errors.length > 0 &&
+                <ul id="errors">
+                    {errors.map((error, ind) => (
+                    <li className="error" key={ind}>{error}</li>
+                    ))}
+                </ul>}
                 {showEdit === false && <div id="commenter-comment">{comment.content}</div>}
                 {showEdit === true &&
                 <form id="edit-form">

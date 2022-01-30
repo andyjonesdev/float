@@ -79,6 +79,7 @@ const Nav = styled.nav`
     }
 
     #all-songs {
+      cursor: pointer;
       width: 15%;
 
       div {
@@ -122,6 +123,17 @@ const Nav = styled.nav`
 
     #upload, #profile {
       width: 15%;
+    }
+
+    #upload {
+      cursor: pointer;
+
+      div {
+        transition: all 0.25s;
+      }
+      div:hover {
+        transform: scale(1.1);
+      }
     }
 
     #user-info{
@@ -210,7 +222,7 @@ const NavBar = () => {
             createSong.visible ? createSong.hide() : createSong.show();
           }}
           id="upload">
-            Upload
+            <div>Upload</div>
           </li>}
           {!user && <li id="upload">
             <SignupFormModal />

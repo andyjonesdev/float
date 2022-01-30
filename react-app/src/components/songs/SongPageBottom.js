@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { useDispatch, useSelector } from "react-redux"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
 import Comment from "../comments/Comment"
@@ -17,10 +17,25 @@ const SongPageBottomContainer = styled.div`
 
     #write-comment {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         height: 15%;
         border-bottom: 1px solid grey;
+
+        #errors {
+            margin-top: 10px;
+            color: red;
+
+            li {
+                list-style-type: circle;
+                margin-left: 15px;
+            }
+
+            h2 {
+                margin-bottom: 5px;
+            }
+        }
 
         #pfp-and-add-comment {
             display: flex;
@@ -141,13 +156,17 @@ const SongPageBottomContainer = styled.div`
 
                     span:first-child {
                         font-weight: bold;
-                        margin-bottom: 0.25%;
+                        margin-bottom: 5px;
                     }
                 }
 
                 #description {
                     margin-top: 2%;
                     margin-bottom: 1%;
+
+                    div {
+                        margin-top: 5px;
+                    }
 
                     span:first-child {
                         font-weight: bold;
@@ -184,6 +203,7 @@ const SongPageBottomContainer = styled.div`
 `
 
 const SongPageBottom = () => {
+    const [errors, setErrors] = useState([])
     const { songId } = useParams()
     const song = useSelector(state => state.songs.entities.song)
     const user = useSelector(state => state.session.user)
@@ -205,13 +225,23 @@ const SongPageBottom = () => {
         return commentsToRender
     }
 
-    const handleCreateComment = async() => {
-        const content = document.querySelector("#comment-input").value
+    const handleCreateComment = async(e) => {
+        e.preventDefault()
+        let content = document.querySelector("#comment-input").value
 
-        await dispatch(createComment({
+        const data = await dispatch(createComment({
             content,
             songId: song.id
         }))
+        if (!Object.keys(data).includes("error")) {
+            document.querySelector("#comment-input").value = ""
+        } else {
+            let errors = []
+            for (let [field, message] of Object.entries(data.payload)) {
+                errors.push(`${field}: ${message}`)
+            }
+            setErrors(errors)
+        }
     }
 
     if (!song || !comments) return <></>
@@ -219,6 +249,13 @@ const SongPageBottom = () => {
     return(
         <SongPageBottomContainer>
             <div id="write-comment">
+                {errors.length > 0 &&
+                <ul id="errors">
+                    <h2>The following errors were found: </h2>
+                    {errors.map((error, ind) => (
+                    <li className="error" key={ind}>{error}</li>
+                    ))}
+                </ul>}
                 <div id="pfp-and-add-comment">
                     <div id="comment-pfp">
                         <img src={user ? user.image ? user.image : "https://media.discordapp.net/attachments/858135958729392152/935040055888719892/user.png" : "https://media.discordapp.net/attachments/858135958729392152/935040055888719892/user.png"}></img>
