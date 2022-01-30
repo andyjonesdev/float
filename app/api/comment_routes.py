@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, abort
 from flask_login import current_user, login_required
 from sqlalchemy import desc
 from app.models import User, Song, Comment, db
@@ -23,3 +23,18 @@ def create_comment():
         db.session.commit()
         return comment.to_dict(), 201
     return {"errors": validation_errors_to_error_messages_dict(form.errors)}, 400
+
+
+# DELETE /api/comments/:commentId/
+@comment_routes.route("/<int:comment_id>", methods=["DELETE"])
+@login_required
+def delete_comment(comment_id):
+    comment = Comment.query.get(comment_id)
+    send_comment_id = comment_id
+
+    if comment.user_id != current_user.id:
+        return abort(403, description="Unauthorized deletion")
+
+    db.session.delete(comment)
+    db.session.commit()
+    return {"commentId": send_comment_id, "message": "Success"}

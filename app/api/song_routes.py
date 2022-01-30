@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, abort
 from flask_login import current_user, login_required
 from sqlalchemy import desc
 from app.models import User, Song, Comment, db
@@ -6,7 +6,7 @@ from app.forms import validation_errors_to_error_messages_dict, CreateSongForm
 
 song_routes = Blueprint('songs', __name__)
 
-# GET /api/songs/:songId
+# GET /api/songs/:songId/
 @song_routes.route("/<int:song_id>")
 def get_a_song(song_id):
     song = Song.query.get(song_id)
@@ -18,24 +18,18 @@ def get_a_song(song_id):
     songDict["artist"], songDict["artistImage"] = songDict["artist"]["username"], songDict["artist"]["image"]
     return songDict, 201
 
-# GET /api/songs/:songId/comments
+# GET /api/songs/:songId/comments/
 @song_routes.route("/<int:song_id>/comments")
 def get_song_comments(song_id):
     comments = Comment.query.filter_by(song_id=song_id).all()
-    print("COMMENTS FOR THIS SONG ------->", comments)
-
-    # if not comments:
-    #     return abort(404)
 
     comment_dict = {}
     for comment in comments:
-        print(f'comment {comment.id} ---> {comment}')
         comment_dict[comment.id] = comment.to_dict()
 
-    print(f'comment_dict ---> {comment_dict}')
     return comment_dict, 201
 
-# PUT /api/songs/:songId
+# PUT /api/songs/:songId/
 @song_routes.route("/<int:song_id>", methods=["PUT"])
 @login_required
 def update_song(song_id):
@@ -80,7 +74,7 @@ def create_song():
         return songDict, 201
     return {"errors": validation_errors_to_error_messages_dict(form.errors)}, 400
 
-# DELETE /api/songs/:songId
+# DELETE /api/songs/:songId/
 @song_routes.route("/<int:song_id>", methods=["DELETE"])
 @login_required
 def delete_song(song_id):
@@ -94,7 +88,7 @@ def delete_song(song_id):
     db.session.commit()
     return {"songId": send_song_id, "message": "Success"}
 
-# GET /api/songs/new
+# GET /api/songs/new/
 @song_routes.route("/new")
 def new_songs():
     new_songs = Song.query.order_by(
