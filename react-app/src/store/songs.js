@@ -112,22 +112,33 @@ const songsSlice = createSlice({
     initialState,
     extraReducers: (builder) => {
         builder.addCase(createSong.fulfilled, (state, action) => {
-            state.entities.new.unshift(action.payload)
-            if (state.entities.new.length > 12) {
-                state.entities.new.splice(state.entities.new.length - 1, 1)
+            if (state.entities.new) {
+                state.entities.new.unshift(action.payload)
+                if (state.entities.new.length > 12) {
+                    state.entities.new.splice(state.entities.new.length - 1, 1)
+                }
             }
+            if (state.entities.songs) {
+                state.entities.songs[action.payload.id] = action.payload;
+            }
+            state.entities.song = action.payload
         });
         builder.addCase(editSong.fulfilled, (state, action) => {
             state.entities.song = action.payload
         })
         builder.addCase(deleteSong.fulfilled, (state, action) => {
-            delete state.entities.songs[action.payload.songId]
+            if (state.entities.songs) {
+                delete state.entities.songs[action.payload.songId]
+            }
         })
         builder.addCase(getNewSongs.fulfilled, (state, action) => {
             state.entities.new = action.payload["new"]
         })
         builder.addCase(getAllSongs.fulfilled, (state, action) => {
-            state.entities.songs = action.payload["all"]
+            state.entities.songs = {}
+            action.payload["all"].forEach((songObj) => {
+                state.entities.songs[songObj.id] = songObj
+            })
         })
         builder.addCase(getASong.fulfilled, (state, action) => {
             state.entities.song = action.payload

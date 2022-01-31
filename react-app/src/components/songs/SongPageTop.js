@@ -46,7 +46,7 @@ const SongPageTopContainer = styled.div`
             #title-artist {
                 z-index: 1;
                 margin-left: 2%;
-                width: 75%;
+                width: 70%;
 
                 #title {
                     font-size: 1.75rem;
@@ -67,6 +67,7 @@ const SongPageTopContainer = styled.div`
                 }
             }
             #date-info {
+                width: 20%;
                 display: flex;
                 flex-direction: column;
                 align-items: flex-end;
@@ -75,6 +76,7 @@ const SongPageTopContainer = styled.div`
                 color: white;
 
                 img {
+                    z-index: 1;
                     cursor: pointer;
                     margin-top: 5px;
                     width: 35px;

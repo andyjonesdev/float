@@ -48,6 +48,7 @@ const SongPageBottomContainer = styled.div`
                 height: 70px;
 
                 img {
+                    border-radius: 50%;
                     max-height: 100%;
                 }
             }
@@ -166,7 +167,7 @@ const SongPageBottomContainer = styled.div`
 
             #no-comments {
                 margin-top: 20px;
-                margin-bottom: 100px;
+                margin-bottom: 60px;
             }
 
             #comments-amount {
