@@ -1,8 +1,8 @@
 import styled from "styled-components"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
-import { createSong, editSong, deleteSong } from "../../store/songs"
+import { useDispatch } from "react-redux"
+import { editSong, deleteSong } from "../../store/songs"
 import { useEditSongContext } from "../../context/EditSongProvider"
 
 const SongFormContainer = styled.div`
@@ -61,7 +61,6 @@ const SongForm = styled.form`
 
         h2 {
             margin-bottom: 5px;
-            // font-size: 1.1rem;
         }
     }
 
@@ -80,20 +79,25 @@ const SongForm = styled.form`
 
     .field {
         display: flex;
-        // background: lightgreen;
         align-items: center;
         flex-direction: column;
     }
 `
 
 
-const EditSongForm = () => {
+const EditSongForm = ({ song }) => {
     const [errors, setErrors] = useState([])
     const editSongForm = useEditSongContext()
     const dispatch = useDispatch()
     const history = useHistory()
-    const song = useSelector(state => state.songs.entities.song)
+    const [songToEdit, setSongToEdit] = useState(song);
 
+    useEffect(() => {
+        const updateSong = async () => {
+            await setSongToEdit(song)
+        }
+        updateSong()
+    }, [song])
 
     const handleEdit = async(e) => {
         e.preventDefault();
@@ -127,6 +131,8 @@ const EditSongForm = () => {
         }
     }
 
+    if (!song) return <></>
+
     return(
         <SongFormContainer>
             <SongForm className={editSongForm.visible ? "visible" : ""}
@@ -140,19 +146,27 @@ const EditSongForm = () => {
                 </ul>}
                 <div className="field">
                     <label for="title">Song Title</label>
-                    <input id="edit-title" type="text" name="title" defaultValue={song.title}></input>
+                    <div key={songToEdit.title}>
+                        <input id="edit-title" type="text" name="title" defaultValue={songToEdit.title}></input>
+                    </div>
                 </div>
                 <div className="field">
                     <label for="art">Link to song art</label>
-                    <input id="edit-image" className="file-input" name="art" defaultValue={song.image}></input>
+                    <div key={songToEdit.image}>
+                        <input id="edit-image" className="file-input" name="art" defaultValue={songToEdit.image}></input>
+                    </div>
                 </div>
                 <div className="field">
                     <label for="audio">Link to song audio</label>
-                    <input id="edit-audio" className="file-input"name="audio" defaultValue={song.audio}></input>
+                    <div key={songToEdit.audio}>
+                        <input id="edit-audio" className="file-input"name="audio" defaultValue={songToEdit.audio}></input>
+                    </div>
                 </div>
                 <div className="field">
                     <label for="description">Song Description (Optional)</label>
-                    <textarea id="edit-description" rows={5} name="description">{song.description ? song.description : ""}</textarea>
+                    <div key={songToEdit.description}>
+                        <textarea id="edit-description" rows={5} name="description">{songToEdit.description ? songToEdit.description : ""}</textarea>
+                    </div>
                 </div>
                 <div className="field" id="x-and-buttons">
                     <button onClick={handleEdit}>Save changes</button>

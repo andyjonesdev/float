@@ -1,7 +1,6 @@
 import styled from "styled-components"
 import AudioPlayer from "react-h5-audio-player"
 import { usePlayer } from "../../context/PlayerProvider";
-import { useEffect } from "react";
 
 import 'react-h5-audio-player/lib/styles.css';
 
@@ -13,7 +12,6 @@ const SongPlayerContainerTheSequel = styled.div`
     }
 
     margin-top: auto;
-    flex-shrink: 0;
 `
 
 const SongPlayerContainer = styled.div`
@@ -56,7 +54,7 @@ const SongPlayer = ({ src }) => {
             id="player"
             volume={0.1}
             layout={"horizontal-reverse"}
-            showSkipControls={true}
+            showSkipControls={false}
             showJumpControls={false}
             showFilledProgress={true}
             showFilledVolume={true}

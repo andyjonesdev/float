@@ -5,7 +5,9 @@ import { usePlayer } from "../../context/PlayerProvider"
 import TimeAgo from "javascript-time-ago"
 import en from "javascript-time-ago/locale/en.json"
 
-TimeAgo.addDefaultLocale(en);
+TimeAgo.setDefaultLocale(en);
+TimeAgo.addLocale(en)
+
 const timeAgo = new TimeAgo('en-US')
 
 const SongPageTopContainer = styled.div`
@@ -29,6 +31,7 @@ const SongPageTopContainer = styled.div`
             }
 
             #play-button {
+                z-index: 1;
                 cursor: pointer;
                 display: flex;
                 height: 30%;
@@ -41,7 +44,7 @@ const SongPageTopContainer = styled.div`
             }
 
             #title-artist {
-                // background-color: green;
+                z-index: 1;
                 margin-left: 2%;
                 width: 75%;
 
@@ -55,6 +58,7 @@ const SongPageTopContainer = styled.div`
                 }
 
                 #artist {
+                    z-index: 1;
                     color: white;
                     font-size: 1.25rem;
                     width: fit-content;
@@ -63,7 +67,6 @@ const SongPageTopContainer = styled.div`
                 }
             }
             #date-info {
-                // background: lightgreen;
                 display: flex;
                 flex-direction: column;
                 align-items: flex-end;
@@ -87,11 +90,16 @@ const SongPageTopContainer = styled.div`
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
             height: 40%;
-            border: 1px solid rgb(104,75,181);
-            margin-left: 10px;
 
-            #visualizer {
+            img {
+                border-radius: 0 0 10px 10px;
+                z-index: 0;
+                position: absolute;
+                bottom: 20px;
+                right: 0;
+                width: 100%;
             }
         }
     }
@@ -111,6 +119,7 @@ const SongPageTopContainer = styled.div`
             aspect-ratio: 1;
 
             img {
+                z-index: 1;
                 height: 100%;
                 width: auto;
                 aspect-ratio: 1;
@@ -127,7 +136,7 @@ const SongPageTop = () => {
     const user = useSelector(state => state.session.user)
     const song = useSelector(state => state.songs.entities.song)
 
-    if (!song) return <></>
+    if (!song || !player) return <></>
 
     return(
         <SongPageTopContainer id="song-page-top">
@@ -144,7 +153,7 @@ const SongPageTop = () => {
                     </div>
                 </div>
                 <div id="left-bottom">
-                    <div id="visualizer">Visualizer will go here</div>
+                    <img src="https://media.discordapp.net/attachments/858135958729392152/937586821343371265/png-transparent-purple-petaled-flowers-floral-design-cut-flowers-purple-purple-flowers-flower-arranging-other-violet-removebg-preview.png?width=710&height=343"></img>
                 </div>
             </div>
             <div id="right">

@@ -22,7 +22,7 @@ const SongPage = () => {
         dispatch(getASong(songId))
     }, [])
 
-    let song = useSelector(state => state.songs.entities.song)
+    const song = useSelector(state => state.songs.entities.song)
 
     if (!song) return <></>
 

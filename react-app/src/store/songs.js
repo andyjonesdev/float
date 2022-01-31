@@ -15,6 +15,21 @@ export const getNewSongs = createAsyncThunk(
     }
 )
 
+export const getAllSongs = createAsyncThunk(
+    "songs/getAllSongs",
+    async (_args, thunkAPI) => {
+        const response = await fetch("/api/songs/all");
+        const data = await response.json();
+        if (response.ok) {
+            return data;
+        } else if (response.status < 500) {
+            throw thunkAPI.rejectWithValue(data.errors);
+        } else {
+            throw thunkAPI.rejectWithValue(["An error occurred. Please try again."]);
+        }
+    }
+)
+
 export const getASong = createAsyncThunk(
     "songs/getASong",
     async (songId, thunkAPI) => {
@@ -90,14 +105,13 @@ export const deleteSong = createAsyncThunk(
 
 )
 
-const initialState = { entities: { songs: {}, song: null, new: null } }
+const initialState = { entities: { songs: null, song: null, new: null } }
 
 const songsSlice = createSlice({
     name: "songs",
     initialState,
     extraReducers: (builder) => {
         builder.addCase(createSong.fulfilled, (state, action) => {
-            state.entities.songs[action.payload.id] = action.payload;
             state.entities.new.unshift(action.payload)
             if (state.entities.new.length > 12) {
                 state.entities.new.splice(state.entities.new.length - 1, 1)
@@ -111,6 +125,9 @@ const songsSlice = createSlice({
         })
         builder.addCase(getNewSongs.fulfilled, (state, action) => {
             state.entities.new = action.payload["new"]
+        })
+        builder.addCase(getAllSongs.fulfilled, (state, action) => {
+            state.entities.songs = action.payload["all"]
         })
         builder.addCase(getASong.fulfilled, (state, action) => {
             state.entities.song = action.payload

@@ -1,13 +1,11 @@
 import styled from "styled-components";
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useHistory } from 'react-router-dom';
 
-import CreateSongProvider, { useCreateSongContext } from "../context/CreateSongProvider";
+import { useCreateSongContext } from "../context/CreateSongProvider";
 import CreateSongForm from "./songs/CreateSongForm";
 import SignupFormModal from "./auth/SignupFormModal";
-import EditSongForm from "./songs/EditSongForm";
-import EditSongProvider from "../context/EditSongProvider";
 import LoginFormModal from "./auth/LoginFormModal";
 import { logout } from "../store/session";
 
@@ -32,8 +30,6 @@ const Nav = styled.nav`
     font-style: italic;
   }
   #float:hover {
-    // padding: 2px;
-    // background: rgb(208,154,245);
     transform: scale(1.05);
   }
 
@@ -61,6 +57,9 @@ const Nav = styled.nav`
     #logo {
       width: 15%;
       height: 100%;
+      img {
+        height: 50px;
+      }
     }
 
     #home {
@@ -138,7 +137,6 @@ const Nav = styled.nav`
 
     #user-info{
       position: relative;
-      // background: lightgreen;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -165,8 +163,6 @@ const Nav = styled.nav`
       }
 
       #user-pfp-container {
-        // background: purple;
-        // height: 100%;
         margin-right: 7%;
         aspect-ratio: 1;
         height: 60%;
@@ -200,8 +196,7 @@ const NavBar = () => {
         <ul>
           <li id="logo">
             <NavLink to='/' exact={true} activeClassName='active'>
-              Icon
-              {/* <img src="https://pbs.twimg.com/media/Dm1Zg7EWwAIT3ro.png"></img> */}
+              <img src="https://media.discordapp.net/attachments/858135958729392152/937537433170493500/lotus-flower-Mi2y0m8K-removebg-preview.png?width=681&height=325"></img>
             </NavLink>
           </li>
           {user && <li id="home">
@@ -214,7 +209,7 @@ const NavBar = () => {
               <div id="float">f l o a t .</div>
             </NavLink>
           </li>}
-          <li id="all-songs">
+          <li onClick={() => history.push("/all")} id="all-songs">
             <div>All songs</div>
           </li>
           {user && <li

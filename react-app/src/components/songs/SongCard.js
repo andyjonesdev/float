@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import { useEffect } from "react"
 import { useHistory } from "react-router-dom"
 
 import { usePlayer } from "../../context/PlayerProvider";
