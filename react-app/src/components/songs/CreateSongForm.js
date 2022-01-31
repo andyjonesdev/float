@@ -14,9 +14,9 @@ const SongFormContainer = styled.div`
 
     const SongForm = styled.form`
     transition: all 0.5s;
-    z-index: 5;
+    z-index: 1000;
     position: absolute;
-    top: -10vh;
+    top: -15vh;
     right: 0;
     left: 0;
     margin-left: auto;
@@ -29,7 +29,7 @@ const SongFormContainer = styled.div`
     color: white;
     display: flex;
     width: 1180px;
-    height: fit-content;
+    height: 150px;
     align-items: center;
     justify-content: space-around;
     flex-direction: row;
@@ -93,6 +93,10 @@ const CreateSongForm = () => {
         }))
         if (!Object.keys(data).includes("error")) {
             createSongForm.hide();
+            document.querySelector("#new-title").value = ""
+            document.querySelector("#new-image").value = ""
+            document.querySelector("#new-description").value = ""
+            document.querySelector("#new-audio").value = ""
             history.push(`/songs/${data.payload.id}`)
         } else {
             console.log(data)

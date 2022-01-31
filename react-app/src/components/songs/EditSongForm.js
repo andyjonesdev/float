@@ -127,6 +127,7 @@ const EditSongForm = ({ song }) => {
         e.preventDefault();
         if (window.confirm("Are you sure you want to delete this song?")) {
             dispatch(deleteSong(song.id))
+            editSongForm.hide();
             history.push("/")
         }
     }

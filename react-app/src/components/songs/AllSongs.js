@@ -22,20 +22,19 @@ const AllSongsContainer = styled.div`
 
     #all-songs-grid {
         justify-items: center;
-        height: fit-content;
         display: grid;
         grid-template-columns: repeat(5, 220px);
-        grid-template-rows: repeat(6, 1fr);
+        grid-auto-rows: repeat(6, 1fr);
     }
 `
 
-const renderAllSongCards = (songs) => {
+const renderAllSongCards = (songsObj) => {
     let songCards = [];
-    songs.forEach((song) => {
+    for (let [key, song] of Object.entries(songsObj)) {
         songCards.push(
-            <SongCard song={song} reactKey={song.id}/>
+            <SongCard song={song} reactKey={key} />
         )
-    })
+    }
     return songCards
 }
 
@@ -47,7 +46,6 @@ const AllSongs = () => {
     }, [])
 
     let allSongs = useSelector(state => state.songs.entities.songs)
-
     if (!allSongs) {
         return <></>
     }
