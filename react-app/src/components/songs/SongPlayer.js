@@ -13,7 +13,6 @@ const SongPlayerContainerTheSequel = styled.div`
     }
 
     margin-top: auto;
-    flex-shrink: 0;
 `
 
 const SongPlayerContainer = styled.div`

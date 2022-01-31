@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { useDispatch, useSelector } from "react-redux"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
 import SongPageTop from "./SongPageTop"
@@ -22,7 +22,7 @@ const SongPage = () => {
         dispatch(getASong(songId))
     }, [])
 
-    let song = useSelector(state => state.songs.entities.song)
+    const song = useSelector(state => state.songs.entities.song)
 
     if (!song) return <></>
 

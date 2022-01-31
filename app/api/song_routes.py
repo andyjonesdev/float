@@ -100,5 +100,17 @@ def new_songs():
         songDict["artist"], songDict["artistImage"] = songDict["artist"]["username"], songDict["artist"]["image"]
         new_songs_list.append(songDict)
 
-
     return { "new": new_songs_list }
+
+# GET /api/songs/all/
+@song_routes.route("/all")
+def all_songs():
+    all_songs = Song.query.all()
+
+    all_songs_list = []
+    for song in all_songs:
+        songDict = song.to_dict()
+        songDict["artist"], songDict["artistImage"] = songDict["artist"]["username"], songDict["artist"]["image"]
+        all_songs_list.append(songDict)
+
+    return { "all": all_songs_list }

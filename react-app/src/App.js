@@ -17,10 +17,12 @@ import UsersList from './components/UsersList';
 import User from './components/User';
 import { authenticate } from './store/session';
 import SongPage from "./components/songs/SongPage";
+import AllSongs from "./components/songs/AllSongs";
 
 const PageContent = styled.div`
   display: flex;
   justify-content: center;
+  margin-bottom: 7vh;
 `
 
 function App() {
@@ -62,6 +64,9 @@ function App() {
                 </ProtectedRoute>
                 <Route path='/songs/:songId' exact>
                   <SongPage />
+                </Route>
+                <Route path='/all' exact>
+                  <AllSongs />
                 </Route>
                 <Route path='/' exact={true} >
                   <Home />

@@ -214,7 +214,7 @@ const NavBar = () => {
               <div id="float">f l o a t .</div>
             </NavLink>
           </li>}
-          <li id="all-songs">
+          <li onClick={() => history.push("/all")} id="all-songs">
             <div>All songs</div>
           </li>
           {user && <li

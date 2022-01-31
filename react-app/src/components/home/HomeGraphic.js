@@ -1,13 +1,55 @@
 import styled from "styled-components"
-import Wave from "@foobar404/wave"
-import { useState, useEffect } from "react"
-import { usePlayer } from "../../context/PlayerProvider"
+import LoginFormModal from "../auth/LoginFormModal"
+import SignupFormModal from "../auth/SignupFormModal"
 
-import ohMyLove from "../../audio/FKA twigs - oh my love (audio).mp3"
 
 const HomeGraphicContainer = styled.div`
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 1px 1px 2px 0px;
+    border: 1px solid black;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 500px;
+    background-image: url("https://miro.medium.com/max/7920/0*dU-eHhSQerI2aHW6");
+    background-size: cover;
+    background-position: center;
     justify-content: center;
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    p {
+        margin-top: 15px;
+        max-width: 60%;
+        text-align: center;
+        font-size: 1.5rem;
+    }
+
+    #buttons {
+        // background: lightgreen;
+        margin-top: 20px;
+        button {
+            transition: all 0.25s;
+            cursor: pointer;
+            font-size: 1.25rem;
+            border: 1px solid black;
+            border-radius: 10px;
+            width: 200px;
+            height: 50px;
+            background-color: rgba(104,75,181,0.9);
+            color: white;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        button:first-child {
+            margin-right: 10px;
+        }
+    }
 
     img {
         width: 100%;
@@ -16,29 +58,14 @@ const HomeGraphicContainer = styled.div`
 `
 
 const HomeGraphic = () => {
-    const player = usePlayer()
-    // let [wave] = useState(new Wave());
-
-    // useEffect(() => {
-    //     player.playSong(ohMyLove)
-    //     setTimeout(() => {
-    //         document.querySelector("audio").setAttribute("crossorigin", "anonymous")
-    //         wave.fromElement("audio", "canvas", {
-    //             type: "stitches",
-    //             colors: ["purple", "pink"]
-    //         });
-    //         wave.fromElement("audio", "canvas2", {
-    //             type: "flower blocks",
-    //             colors: ["purple", "lavender"]
-    //         });
-    //     }, 2000)
-    // }, [])
-
-
     return(
         <HomeGraphicContainer>
-            {/* <canvas width="500" height="500" id="canvas"></canvas>
-            <canvas width="500" height="500" id="canvas2"></canvas> */}
+            <h1>Escape life's noise with float.</h1>
+            <p>float offers a curated collection of dreamy, psychedelic vibes. Listen and enjoy, or upload your own vibes.</p>
+            <div id="buttons">
+                <button><SignupFormModal /></button>
+                <button><LoginFormModal /></button>
+            </div>
         </HomeGraphicContainer>
     )
 }
