@@ -40,14 +40,10 @@ const SongPageBottomContainer = styled.div`
         #pfp-and-add-comment {
             display: flex;
             flex-direction: row;
-            // background: rgb(196,160,212);
-            // height: fit-content;
             margin: 10px 0;
             width: 90%;
 
             #comment-pfp {
-                // background: pink;
-                // border-right: 1px solid grey;
                 width: 70px;
                 height: 70px;
 
@@ -61,7 +57,6 @@ const SongPageBottomContainer = styled.div`
                 position: relative;
                 justify-content: center;
                 align-items: center;
-                // background: lightblue;
                 height: 70px;
                 width: 100%;
                 border-radius: 10px;
@@ -73,7 +68,6 @@ const SongPageBottomContainer = styled.div`
                     height: 70%;
                     width: 95%;
                     border-radius: 10px;
-                    // background: lightblue;
                 }
 
                 #post-comment {
@@ -96,11 +90,9 @@ const SongPageBottomContainer = styled.div`
         display: flex;
         flex-direction: column;
         height: 85%;
-        // background: pink;
 
         #artist-and-description {
             display: flex;
-            // background: cyan;
             width: 100%;
             height: 40%;
             border-bottom: 1px solid grey;
@@ -108,7 +100,6 @@ const SongPageBottomContainer = styled.div`
             #artist-info {
                 display: flex;
                 flex-direction: column;
-                // background: green;
                 width: 15%;
                 min-height: 200px;
 
@@ -116,11 +107,9 @@ const SongPageBottomContainer = styled.div`
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    // background: purple;
                     height: 100%;
 
                     #artist-img {
-                        // background: orange;
                         height: 80%;
                         width: auto;
                         aspect-ratio: 1;
@@ -133,19 +122,15 @@ const SongPageBottomContainer = styled.div`
                     }
                 }
                 #artist-name {
-                    // background: grey;
                     height: 20%;
                     font-size: 1.20rem;
                     display: flex;
                     color: white;
-                    // padding-left: 20px;
                     justify-content: center;
-                    // align-items: center;
                 }
             }
 
             #description-and-release {
-                // background: red;
                 width: 82.5%;
                 padding-top: 2%;
                 padding-left: 2%;
@@ -248,7 +233,7 @@ const SongPageBottom = () => {
 
     return(
         <SongPageBottomContainer>
-            <div id="write-comment">
+            {user && <div id="write-comment">
                 {errors.length > 0 &&
                 <ul id="errors">
                     <h2>The following errors were found: </h2>
@@ -268,7 +253,7 @@ const SongPageBottom = () => {
                         <img onClick={handleCreateComment} id="post-comment" src="https://media.discordapp.net/attachments/858135958729392152/937149721921863750/message_1.png"></img>
                     </form>
                 </div>
-            </div>
+            </div>}
             <div id="artist-and-comments">
                 <div id="artist-and-description">
                     <div id="artist-info">
@@ -287,7 +272,7 @@ const SongPageBottom = () => {
                             <span>{song.createdAt.split(" ").slice(1, 4).join(" ")}</span>
                         </div>
                         <div id="description">
-                            {song.description && <span>About this song:</span>}
+                            {song.description && <span>About:</span>}
                             <div>{song.description}</div>
                         </div>
                     </div>

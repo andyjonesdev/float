@@ -1,8 +1,8 @@
 import styled from "styled-components"
 import { useState, useEffect } from "react"
-import { useHistory, useParams } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
-import { createSong, editSong, deleteSong, getASong } from "../../store/songs"
+import { useHistory } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { editSong, deleteSong } from "../../store/songs"
 import { useEditSongContext } from "../../context/EditSongProvider"
 
 const SongFormContainer = styled.div`
@@ -61,7 +61,6 @@ const SongForm = styled.form`
 
         h2 {
             margin-bottom: 5px;
-            // font-size: 1.1rem;
         }
     }
 
@@ -80,7 +79,6 @@ const SongForm = styled.form`
 
     .field {
         display: flex;
-        // background: lightgreen;
         align-items: center;
         flex-direction: column;
     }

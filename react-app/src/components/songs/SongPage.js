@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { useDispatch, useSelector } from "react-redux"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useParams } from "react-router-dom"
 
 import SongPageTop from "./SongPageTop"

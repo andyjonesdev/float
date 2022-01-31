@@ -19,7 +19,6 @@ flex-direction: column;
 #heading {
   display: flex;
   justify-content: center;
-  // background: lightgreen;
   border-bottom: 1px solid white;
   padding-bottom: 5%;
   margin: 0 5%;
@@ -35,7 +34,7 @@ h1 {
 
 #errors {
   color: #ff0033;
-  // margin: 0% 5%;
+  margin: 0 5%;
   margin-bottom: 5%;
   display: flex;
   flex-direction: column;
@@ -84,7 +83,6 @@ form {
       padding: 0 5%;
       margin: 2% 0;
       flex-direction: column;
-      // background: green;
 
       label {
         color: white;
@@ -122,6 +120,7 @@ const SignUpForm = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [image, setImage] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
@@ -129,7 +128,7 @@ const SignUpForm = () => {
   const onSignUp = async (e) => {
     e.preventDefault();
     if (password === repeatPassword) {
-      const data = await dispatch(signUp(username, email, password));
+      const data = await dispatch(signUp(username, email, password, image));
       if (data) {
         setErrors(data)
       }
@@ -150,6 +149,10 @@ const SignUpForm = () => {
 
   const updateRepeatPassword = (e) => {
     setRepeatPassword(e.target.value);
+  };
+
+  const updateImage = (e) => {
+    setImage(e.target.value);
   };
 
   if (user) {
@@ -213,6 +216,8 @@ const SignUpForm = () => {
         <div className="form-section">
           <label>Profile Image URL</label>
           <input
+          onChange={updateImage}
+          value={image}
           placeholder="Link to your profile image"
           ></input>
         </div>

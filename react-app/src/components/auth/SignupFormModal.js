@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { Modal } from '../../context/Modal';
 import SignupForm from './SignUpForm'
-import LoginForm from './LoginForm';
 
 const Container = styled.div`
   div {

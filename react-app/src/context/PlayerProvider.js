@@ -8,7 +8,6 @@ export const usePlayer = () => useContext(PlayerContext);
 const PlayerProvider = ({ children }) => {
     const [visible, setVisible] = useState(false);
 
-
     const playSong = async(audioLink) => {
         if (!visible) {
            await setVisible(true)

@@ -9,7 +9,6 @@ const SongFormContainer = styled.div`
     .visible {
         visibility: visible;
         top: 5vh;
-        // height: fit-content;
     }
     `
 
@@ -40,6 +39,7 @@ const SongFormContainer = styled.div`
     }
 
     #errors {
+        width: 230px;
         color: red;
 
         li {
@@ -49,7 +49,6 @@ const SongFormContainer = styled.div`
 
         h2 {
             margin-bottom: 5px;
-            // font-size: 1.1rem;
         }
     }
 
@@ -68,7 +67,6 @@ const SongFormContainer = styled.div`
 
     .field {
         display: flex;
-        // background: lightgreen;
         align-items: center;
         flex-direction: column;
     }
@@ -97,6 +95,7 @@ const CreateSongForm = () => {
             createSongForm.hide();
             history.push(`/songs/${data.payload.id}`)
         } else {
+            console.log(data)
             let errors = []
             for (let [field, message] of Object.entries(data.payload)) {
                 errors.push(`${field}: ${message}`)

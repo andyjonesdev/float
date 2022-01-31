@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import ReactAudioPlayer from 'react-audio-player';
-import { Redirect } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { login } from '../../store/session';
 
 const LoginFormContainer = styled.div`
@@ -90,7 +88,6 @@ form {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    // background: lightgreen;
     height: 100%;
 
     .form-section {
@@ -98,7 +95,6 @@ form {
       padding: 0 5%;
       margin: 5% 0;
       flex-direction: column;
-      // background: green;
 
       label {
         color: white;
@@ -135,7 +131,6 @@ const LoginForm = () => {
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
 
   const onLogin = async (e) => {
@@ -169,10 +164,9 @@ const LoginForm = () => {
             <li className="error" key={ind}>{error}</li>
           ))}
         </ul>}
-        <div id="not-member">
-          <span>Not on float yet?</span>
-          <a>Sign up</a>
-        </div>
+        {!errors.length && <div id="not-member">
+          <span>Log in to float</span>
+        </div>}
         <div className="form-section">
           <label htmlFor='email'>Email</label>
           <input

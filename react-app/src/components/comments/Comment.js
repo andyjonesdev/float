@@ -14,7 +14,6 @@ const CommentContainer = styled.div`
 
     #commenter-pfp {
         height: 75px;
-        // height: 100%;
         aspect-ratio: 1;
         border-radius: 50%;
         overflow: hidden;
@@ -47,7 +46,6 @@ const CommentContainer = styled.div`
         }
 
         #commenter-comment {
-            // background: green;
             margin-top: 1%;
             width: 100%;
             overflow: hidden;
@@ -72,19 +70,15 @@ const CommentContainer = styled.div`
         flex-direction: column;
         align-items: flex-end;
         margin-right: 20px;
-        // position: relative;
-        // background: red;
         width: 15%;
         height: 100%;
 
         #buttons {
             position: absolute;
-            // background-color: green;
             display: flex;
             justify-content: flex-end;
             right: 20px;
             bottom: 10px;
-            // width: fit-content;
 
             button {
                 box-shadow: 1px 1px 2px 0px;
@@ -110,10 +104,8 @@ const CommentContainer = styled.div`
         }
 
         span {
-            // align-self: center;
             height: fit-content;
             margin-top: 5%;
-            // background: blue;
         }
     }
 `
@@ -164,8 +156,8 @@ const Comment = ({ comment }) => {
                     <li className="error" key={ind}>{error}</li>
                     ))}
                 </ul>}
-                {showEdit === false && <div id="commenter-comment">{comment.content}</div>}
-                {showEdit === true &&
+                {!showEdit && <div id="commenter-comment">{comment.content}</div>}
+                {showEdit &&
                 <form id="edit-form">
                     <textarea id="edit-textarea">{comment.content}</textarea>
                 </form>}
