@@ -5,6 +5,30 @@ Welcome to my project, float! float is a loose clone of SoundCloud with a theme 
 ## Live Site
 https://float-away.herokuapp.com/
 
+## Technologies Used
+- React
+- Redux
+- Redux Toolkit
+- Flask
+- SQLAlchemy
+- Postgres
+- WTForms
+- Styled Components
+
+## Site Views
+### Splash
+![alt text](https://media.discordapp.net/attachments/858135958729392152/938857196589043742/float-homepage.PNG?width=1001&height=584)
+
+### Song Page
+![alt text](https://media.discordapp.net/attachments/858135958729392152/938857259033829476/float-songpage.PNG?width=925&height=584)
+
+### All Songs
+![alt text](https://media.discordapp.net/attachments/858135958729392152/938859516215296020/unknown.png?width=798&height=584)
+
+### Auth Forms
+![alt text](https://media.discordapp.net/attachments/858135958729392152/938859284651966474/unknown.png?width=509&height=584)
+![alt text](https://media.discordapp.net/attachments/858135958729392152/938859415065473054/unknown.png)
+
 ## How to Clone and Run float Locally
 1. Clone this repository by running `git clone https://github.com/andyrose507/float`
 2. In the directory where you cloned the repository, run `pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt` to install backend dependencies
@@ -16,13 +40,3 @@ https://float-away.herokuapp.com/
 8. Start the backend server by running `flask run`
 9. In another terminal, navigate to the `react-app` directory and run  `npm install`
 10. Start the frontend server by running `npm start` 
-
-## Technologies Used
-- React
-- Redux
-- Redux Toolkit
-- Flask
-- SQLAlchemy
-- Postgres
-- WTForms
-- Styled Components
