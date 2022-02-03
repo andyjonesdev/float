@@ -14,6 +14,7 @@ https://float-away.herokuapp.com/
 - Postgres
 - WTForms
 - Styled Components
+- react-h5-audio-player
 
 ## Site Views
 ### Splash
@@ -25,7 +26,7 @@ https://float-away.herokuapp.com/
 ### All Songs
 ![alt text](https://media.discordapp.net/attachments/858135958729392152/938859516215296020/unknown.png?width=798&height=584)
 
-### Auth Forms
+### Auth Modals
 ![alt text](https://media.discordapp.net/attachments/858135958729392152/938859284651966474/unknown.png?width=509&height=584)
 ![alt text](https://media.discordapp.net/attachments/858135958729392152/938859415065473054/unknown.png)
 
