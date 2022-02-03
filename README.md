@@ -1,6 +1,13 @@
 # float
 
-Welcome to my project, float! float is a loose clone of SoundCloud with a theme of dreamy, psychedelic, or groovy songs that can help you relax. 
+Welcome to my project, float! float is a loose clone of SoundCloud with a theme of dreamy, psychedelic, or groovy songs that can help you relax.
+
+This is a solo project that was completed in a 2 week sprint and features:
+
+- full CRUD (Create, Read, Update, Delete) functionality for Songs and Comments
+- Song playback via a react-h5-audio-player instance
+- User authentication and authorization
+- WTForm validations for supplied form info
 
 ## Live Site
 https://float-away.herokuapp.com/
