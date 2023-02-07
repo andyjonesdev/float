@@ -35,7 +35,7 @@ def upgrade():
     )
 
     if environment == "production":
-        op.execute(f"ALTER TABLE <table_name> SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE songs SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
 
