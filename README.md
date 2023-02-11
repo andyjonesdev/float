@@ -10,7 +10,7 @@ This is a solo project that was completed in a 2 week sprint and features:
 - WTForm validations for supplied form info
 
 ## Live Site
-https://float-away.herokuapp.com/
+https://float-away.onrender.com/
 
 ## Technologies Used
 - React
